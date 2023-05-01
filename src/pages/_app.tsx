@@ -17,7 +17,9 @@ function MyApp({
       supabaseClient={supabase}
       initialSession={pageProps.initialSession}
     >
-      <Component {...pageProps} />
+      <main className="min-h-screen bg-[#1c1c1c] px-4 pt-4 text-white">
+        <Component {...pageProps} />
+      </main>
     </SessionContextProvider>
   );
 }
