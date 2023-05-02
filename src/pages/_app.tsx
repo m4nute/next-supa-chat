@@ -4,6 +4,7 @@ import { createBrowserSupabaseClient } from "@supabase/auth-helpers-nextjs";
 import { SessionContextProvider, Session } from "@supabase/auth-helpers-react";
 import { AppProps } from "next/app";
 import Head from "next/head";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 function MyApp({
   Component,
@@ -12,6 +13,7 @@ function MyApp({
   initialSession: Session;
 }>) {
   const [supabase] = useState(() => createBrowserSupabaseClient());
+  const queryClient = new QueryClient();
 
   return (
     <>
@@ -24,9 +26,11 @@ function MyApp({
         supabaseClient={supabase}
         initialSession={pageProps.initialSession}
       >
-        <main className="min-h-screen bg-[#1c1c1c] px-4 pt-4 text-white">
-          <Component {...pageProps} />
-        </main>
+        <QueryClientProvider client={queryClient}>
+          <main className="min-h-screen bg-[#1c1c1c] px-4 pt-4 text-white">
+            <Component {...pageProps} />
+          </main>
+        </QueryClientProvider>
       </SessionContextProvider>
     </>
   );

@@ -1,8 +1,15 @@
+import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { type NextPage } from "next";
-import Link from "next/link";
 
 const Home: NextPage = () => {
-  return <Link href="Auth">Auth</Link>;
+  const supabase = useSupabaseClient();
+
+  return (
+    <div>
+      <h1>Chats</h1>
+      <ul className=""></ul>
+    </div>
+  );
 };
 
 export default Home;
