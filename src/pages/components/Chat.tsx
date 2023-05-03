@@ -1,12 +1,16 @@
 import { ZodType, z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 
 export default function Chat({ id }: { id: number }) {
   type formData = {
     message: string;
   };
 
+  const supabase = useSupabaseClient();
+
+  const user = useUser();
   const schema: ZodType<formData> = z.object({
     message: z.string().min(1).max(500),
   });
@@ -20,7 +24,10 @@ export default function Chat({ id }: { id: number }) {
     resolver: zodResolver(schema),
   });
 
-  const submitData = (data: formData) => {
+  const submitData = async ({ message }: formData) => {
+    const { error } = await supabase
+      .from("messages")
+      .insert({ sender_id: user?.id, chat_id: id, content: message });
     reset();
   };
 
