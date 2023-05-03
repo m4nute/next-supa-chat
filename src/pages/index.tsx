@@ -58,8 +58,7 @@ const Home: NextPage = () => {
                   className={`w-full border-y border-gray-600 px-3 py-2 ${
                     selectedChat === chatIds?.[index] && "bg-[#292929]"
                   }`}
-                  onClick={() => setSelectedChat(chatIds?.[index])}
-                >
+                  onClick={() => setSelectedChat(chatIds?.[index])}>
                   {user}
                 </button>
               </li>
