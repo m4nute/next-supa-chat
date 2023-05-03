@@ -9,7 +9,7 @@ const Home: NextPage = () => {
 
   async function getUserChats() {
     return await supabase
-      .from("chats_users")
+      .from("chat_users")
       .select("chat_id")
       .eq("user_id", user?.id);
   }
@@ -17,12 +17,19 @@ const Home: NextPage = () => {
   const { isLoading, data, isError } = useQuery({
     queryKey: ["getChats"],
     queryFn: getUserChats,
+    enabled: !!user?.id,
   });
+
+  console.log(data?.data);
 
   return (
     <div>
       <h1>Chats</h1>
-      <ul className=""></ul>
+      <ul className="">
+        {data?.data?.map((chat: any, index: number) => {
+          return <li key={index}>{chat.chat_id}</li>;
+        })}
+      </ul>
     </div>
   );
 };
