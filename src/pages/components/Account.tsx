@@ -1,5 +1,4 @@
 import {
-  useUser,
   useSupabaseClient,
   Session,
 } from "@supabase/auth-helpers-react";
@@ -7,9 +6,6 @@ import { Database } from "../types/supabase";
 
 export default function Account({ session }: { session: Session }) {
   const supabase = useSupabaseClient<Database>();
-  const user = useUser();
-
-  console.log(user);
 
   return (
     <div className="form-widget">

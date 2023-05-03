@@ -1,4 +1,4 @@
-import { ZodType, z } from "zod";
+import { type ZodType, z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
@@ -29,6 +29,7 @@ export default function Chat({ id }: { id: number }) {
       .from("messages")
       .insert({ sender_id: user?.id, chat_id: id, content: message });
     reset();
+    console.log(error)
   };
 
   return (
