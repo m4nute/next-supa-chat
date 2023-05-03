@@ -32,21 +32,19 @@ export default function Chat({ id }: { id: number }) {
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit(submitData)}>
-        <input
-          type="text"
-          placeholder="Send Message"
-          {...register("message")}
-          className="border bg-[#1c1c1c]"
-        />
-        <button type="submit">send</button>
+    <form onSubmit={handleSubmit(submitData)} className="w-4/5">
+      <input
+        type="text"
+        placeholder="Send Message"
+        {...register("message")}
+        className="border bg-[#1c1c1c]"
+      />
+      <button type="submit">send</button>
 
-        <br />
-        {errors.message && (
-          <span className="text-red-500">{errors.message.message}</span>
-        )}
-      </form>
-    </div>
+      <br />
+      {errors.message && (
+        <span className="text-red-500">{errors.message.message}</span>
+      )}
+    </form>
   );
 }

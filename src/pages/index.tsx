@@ -67,9 +67,7 @@ const Home: NextPage = () => {
           })}
         </ul>
       </div>
-      <div className="w-4/5">
-        {selectedChat ? <Chat id={selectedChat} /> : <h1>Select a Chat!</h1>}
-      </div>
+      {selectedChat ? <Chat id={selectedChat} /> : <h1>Select a Chat!</h1>}
     </div>
   );
 };
