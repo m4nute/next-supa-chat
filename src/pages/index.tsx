@@ -3,6 +3,7 @@ import { type NextPage } from "next";
 import { useQuery } from "@tanstack/react-query";
 import { useUser } from "@supabase/auth-helpers-react";
 import { useState } from "react";
+import Chat from "./components/Chat";
 
 const Home: NextPage = () => {
   const supabase = useSupabaseClient();
@@ -54,7 +55,9 @@ const Home: NextPage = () => {
             return (
               <li key={index}>
                 <button
-                  className="w-full border-y border-gray-600 px-3 py-2"
+                  className={`w-full border-y border-gray-600 px-3 py-2 ${
+                    selectedChat === chatIds?.[index] && "bg-[#292929]"
+                  }`}
                   onClick={() => setSelectedChat(chatIds?.[index])}
                 >
                   {user}
@@ -64,7 +67,9 @@ const Home: NextPage = () => {
           })}
         </ul>
       </div>
-      <div>holaa</div>
+      <div className="w-4/5">
+        {selectedChat ? <Chat id={selectedChat} /> : <h1>Select a Chat!</h1>}
+      </div>
     </div>
   );
 };
