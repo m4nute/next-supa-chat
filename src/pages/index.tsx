@@ -27,7 +27,7 @@ const Home: NextPage = () => {
   async function getUserChats() {
     const { data } = await supabase
       .from("chat_users")
-      .select("profiles (username)")
+      .select("profiles (username, avatar_url)")
       .neq("user_id", user?.id)
       .in("chat_id", chatIds!);
     // @ts-ignore

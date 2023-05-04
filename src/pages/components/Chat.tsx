@@ -1,9 +1,10 @@
 import { type ZodType, z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useSupabaseClient, useUser, useSession } from "@supabase/auth-helpers-react";
+import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 import { useQuery } from "@tanstack/react-query";
 import { IconBrandTelegram } from '@tabler/icons-react';
+import * as Avatar from "@radix-ui/react-avatar";
 
 export default function Chat({ id, receiver }: { id: number; receiver: any; }) {
   type formData = {
@@ -43,8 +44,19 @@ export default function Chat({ id, receiver }: { id: number; receiver: any; }) {
 
   return (
     <div className="w-4/5">
-      <div className="w-full bg-[#262930] h-16 px-4 flex flex-col justify-center border-b border-gray-700">
-        <h1 className="text-xl">{receiver.username ? receiver.username : receiver.email}</h1>
+      <div className="w-full bg-[#262930] h-16 px-4  border-b border-gray-700 flex">
+        <Avatar.Root className="h-[2.5rem] w-[2.5rem] select-none items-center  overflow-hidden rounded-full align-middle">
+          <Avatar.Image
+            className="h-full w-full rounded-[inherit] object-cover"
+            src={receiver?.avatar_url}
+            alt="Profile Picture"
+          />
+          <Avatar.Fallback className="text-black leading-1 flex h-full w-full items-center justify-center bg-white text-[15px] font-medium">
+            {receiver?.email?.slice(0, 2)}
+          </Avatar.Fallback>
+
+        </Avatar.Root>
+        <h1 className="text-xl flex flex-col justify-center">{receiver.username ? receiver.username : receiver.email}</h1>
       </div>
       <ul className="px-10 pt-2">
         {messages?.map((message: any, index: number) => {
