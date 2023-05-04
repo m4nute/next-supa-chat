@@ -48,11 +48,14 @@ export default function Chat({ id, receiver }: { id: number; receiver: any; }) {
       <div className="w-full bg-[#262930] h-16 px-4 flex flex-col justify-center border-b border-gray-700">
         <h1 className="text-xl">{receiver.username}</h1>
       </div>
-      <ul className="flex flex-col px-10 pt-2">
+      <ul className="px-10 pt-2">
         {messages?.map((message: any, index: number) => {
-          return <li key={index} className="bg-gray-700 inline-block w-[12rem] py-1 px-2 rounded-xl mt-2">
+          return <li key={index} className="bg-[#292929] py-1.5 pl-4 pr-2 rounded-xl mt-2 inline-flex">
             {/* <h6 className="text-blue-400">{receiver}</h6> */}
             <p className="text-lg opacity-90">{message.content}</p>
+            <span className="text-[0.8rem] flex flex-col justify-end ml-3 opacity-80">
+              {new Date(message.created_at).toLocaleTimeString('default', { hour: '2-digit', minute: '2-digit', hourCycle: 'h23' })}
+            </span>
           </li>;
         })}
       </ul>
