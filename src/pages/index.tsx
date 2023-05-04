@@ -65,9 +65,13 @@ const Home: NextPage = () => {
                 src={user?.user_metadata.avatar_url}
                 alt="Profile Picture"
               />
+              <Avatar.Fallback className="text-black leading-1 flex h-full w-full items-center justify-center bg-white text-[15px] font-medium">
+                {user?.email?.slice(0, 2)}
+              </Avatar.Fallback>
+
             </Avatar.Root>
           </div>
-          <h1 className="text-lg ml-3 flex flex-col justify-center">{user?.user_metadata.name}</h1>
+          <h1 className="text-lg ml-3 flex flex-col justify-center">{user?.user_metadata.name ? user?.user_metadata.name : user?.email}</h1>
         </div>
         <div className="my-2 w-5/6 block mx-auto">
           <input type="text" placeholder="Search (username)" value={filterText} className="bg-[#333333] rounded-lg py-1.5 px-2 w-full" onChange={(e) => setFilterText(e.target.value)} />
