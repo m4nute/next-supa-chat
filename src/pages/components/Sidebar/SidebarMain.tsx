@@ -1,7 +1,7 @@
-import * as Avatar from "@radix-ui/react-avatar";
 import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
+import Topbar from "./Topbar/TopbarMain";
 
 export default function Sidebar({ setSelectedUser, setSelectedChat, selectedChat }: any) {
     const user = useUser();
@@ -46,25 +46,9 @@ export default function Sidebar({ setSelectedUser, setSelectedChat, selectedChat
         return data?.map((obj) => obj?.profiles);
     }
 
-
     return (
         <div className="min-h-full w-1/5 bg-[#1c1c1c] shadow-lg border-r border-gray-700">
-            <div className=" px-2 flex h-16 bg-[#262930]">
-                <div className="justify-center flex flex-col">
-                    <Avatar.Root className="h-[2.5rem] w-[2.5rem] select-none items-center  overflow-hidden rounded-full align-middle">
-                        <Avatar.Image
-                            className="h-full w-full rounded-[inherit] object-cover"
-                            src={user?.user_metadata.avatar_url}
-                            alt="Profile Picture"
-                        />
-                        <Avatar.Fallback className="text-black leading-1 flex h-full w-full items-center justify-center bg-white text-[15px] font-medium">
-                            {user?.email?.slice(0, 2)}
-                        </Avatar.Fallback>
-
-                    </Avatar.Root>
-                </div>
-                <h1 className="text-lg ml-3 flex flex-col justify-center">{user?.user_metadata.name ? user?.user_metadata.name : user?.email}</h1>
-            </div>
+            <Topbar user={user} />
             <div className="my-3 flex">
                 <input type="text" placeholder="Search (username)" value={filterText} className="bg-[#333333] ml-2 rounded-lg py-1.5 px-2 w-full" onChange={(e) => setFilterText(e.target.value)} />
                 <button className="bg-[#1c1c1c] mx-2 text-2xl hover:text-green-200 transition-all">+</button>
@@ -85,7 +69,7 @@ export default function Sidebar({ setSelectedUser, setSelectedChat, selectedChat
                             </button>
                         </li>
                     )
-                }) : <h2 className="text-center">No Chats Found</h2>}
+                }) : <h2 className="text-center">No Chats Found :c</h2>}
             </ul>
         </div>
     )
