@@ -9,5 +9,18 @@
 
 a[href*="forgot-password"] {
     display: none !important;
+}
+
+@keyframes fadein {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
   }
   
+  .fadeIn {
+    animation-name: fadein;
+    animation-duration: .3s;
+  }
