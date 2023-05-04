@@ -44,7 +44,7 @@ export default function Chat({ id, receiver }: { id: number; receiver: any; }) {
 
   return (
     <div className="w-4/5">
-      <h1>{ }</h1>
+      <h1>{receiver}</h1>
       <ul>
         {messages?.map((message: any, index: number) => {
           return <li key={index}>{message.content}</li>;

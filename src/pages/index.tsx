@@ -56,9 +56,8 @@ const Home: NextPage = () => {
             return (
               <li key={index}>
                 <button
-                  className={`w-full border-y border-gray-600 px-3 py-2 ${
-                    selectedChat === chatIds?.[index] && "bg-[#292929]"
-                  }`}
+                  className={`w-full border-y border-gray-600 px-3 py-2 ${selectedChat === chatIds?.[index] && "bg-[#292929]"
+                    }`}
                   onClick={() => {
                     setSelectedChat(chatIds?.[index]);
                     setSelectedUser(user);
@@ -72,7 +71,7 @@ const Home: NextPage = () => {
         </ul>
       </div>
       {selectedChat ? (
-        <Chat id={selectedChat} receiver={user} />
+        <Chat id={selectedChat} receiver={selectedUser} />
       ) : (
         <h1>Select a Chat!</h1>
       )}
