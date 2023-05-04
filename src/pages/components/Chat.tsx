@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 import { useQuery } from "@tanstack/react-query";
+import { IconBrandTelegram } from '@tabler/icons-react';
 
 export default function Chat({ id, receiver }: { id: number; receiver: any; }) {
   type formData = {
@@ -47,7 +48,7 @@ export default function Chat({ id, receiver }: { id: number; receiver: any; }) {
       <div className="w-full bg-[#262930] h-16 px-4 flex flex-col justify-center border-b border-gray-700">
         <h1 className="text-xl">{receiver.username}</h1>
       </div>
-      <ul className="flex flex-col px-2 pt-2">
+      <ul className="flex flex-col px-10 pt-2">
         {messages?.map((message: any, index: number) => {
           return <li key={index} className="bg-gray-700 inline-block w-[12rem] py-1 px-2 rounded-xl mt-2">
             {/* <h6 className="text-blue-400">{receiver}</h6> */}
@@ -55,14 +56,14 @@ export default function Chat({ id, receiver }: { id: number; receiver: any; }) {
           </li>;
         })}
       </ul>
-      <form onSubmit={handleSubmit(submitData)} className="w-full px-2">
+      <form onSubmit={handleSubmit(submitData)} className="w-4/5 py-2 px-4 h-16 bg-[#262930] border-t border-gray-700 flex fixed bottom-0 right-0">
         <input
           type="text"
-          placeholder="Send Message"
+          placeholder="Message"
           {...register("message")}
-          className="border bg-[#1c1c1c]"
+          className="bg-[#1c1c1c] px-4 rounded-lg h-12 w-full"
         />
-        <button type="submit">send</button>
+        <button type="submit" className="text-center ml-4"><IconBrandTelegram size={24} className="stroke-1 hover:stroke-2 hover:opacity-80 transition-all" /></button>
 
         <br />
         {errors.message && (
