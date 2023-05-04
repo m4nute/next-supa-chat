@@ -4,14 +4,13 @@ import { useQuery } from "@tanstack/react-query";
 import { useUser } from "@supabase/auth-helpers-react";
 import { useState } from "react";
 import Chat from "./components/Chat";
-import Image from 'next/image'
 import * as Avatar from '@radix-ui/react-avatar'
 const Home: NextPage = () => {
   const supabase = useSupabaseClient();
   const user = useUser();
 
   const [selectedChat, setSelectedChat] = useState<number>();
-  const [selectedUser, setSelectedUser] = useState<string>();
+  const [selectedUser, setSelectedUser] = useState<any>();
 
   async function getIds() {
     const { data } = await supabase
@@ -29,7 +28,7 @@ const Home: NextPage = () => {
       .neq("user_id", user?.id)
       .in("chat_id", chatIds!);
     // @ts-ignore
-    return data?.map((obj) => obj?.profiles?.username);
+    return data?.map((obj) => obj?.profiles);
   }
 
   const { data: chatIds } = useQuery({
@@ -50,12 +49,19 @@ const Home: NextPage = () => {
 
   return (
     <div className="flex h-full">
-      <div className="min-h-full w-1/5 bg-[#232323]">
-        <div className="pt-1 px-2 flex">
-          <div className="relative h-10 w-10">
-            <Image src={user?.user_metadata.avatar_url} alt="Profile Picture" fill />
+      <div className="min-h-full w-1/5 bg-[#1c1c1c] shadow-lg border-r border-gray-700">
+        <div className=" px-2 flex h-16 bg-[#262930]">
+          <div className="justify-center flex flex-col">
+            <Avatar.Root className="h-[2.5rem] w-[2.5rem] select-none items-center  overflow-hidden rounded-full align-middle">
+              <Avatar.Image
+                className="h-full w-full rounded-[inherit] object-cover"
+                src={user?.user_metadata.avatar_url}
+                alt="Profile Picture"
+              />
+            </Avatar.Root>
           </div>
-          {user?.user_metadata.name}</div>
+          <h1 className="text-lg ml-3 flex flex-col justify-center">{user?.user_metadata.name}</h1>
+        </div>
         <ul>
           {userList?.map((user: any, index: number) => {
             return (
@@ -68,7 +74,7 @@ const Home: NextPage = () => {
                     setSelectedUser(user);
                   }}
                 >
-                  {user}
+                  {user.username}
                 </button>
               </li>
             );
