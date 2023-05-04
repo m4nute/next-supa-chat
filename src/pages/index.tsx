@@ -9,7 +9,8 @@ const Home: NextPage = () => {
   const supabase = useSupabaseClient();
   const user = useUser();
 
-  const [selectedChat, setSelectedChat] = useState();
+  const [selectedChat, setSelectedChat] = useState<number>();
+  const [selectedUser, setSelectedUser] = useState<string>();
 
   async function getIds() {
     const { data } = await supabase
@@ -58,7 +59,11 @@ const Home: NextPage = () => {
                   className={`w-full border-y border-gray-600 px-3 py-2 ${
                     selectedChat === chatIds?.[index] && "bg-[#292929]"
                   }`}
-                  onClick={() => setSelectedChat(chatIds?.[index])}>
+                  onClick={() => {
+                    setSelectedChat(chatIds?.[index]);
+                    setSelectedUser(user);
+                  }}
+                >
                   {user}
                 </button>
               </li>
@@ -66,7 +71,11 @@ const Home: NextPage = () => {
           })}
         </ul>
       </div>
-      {selectedChat ? <Chat id={selectedChat} /> : <h1>Select a Chat!</h1>}
+      {selectedChat ? (
+        <Chat id={selectedChat} receiver={user} />
+      ) : (
+        <h1>Select a Chat!</h1>
+      )}
     </div>
   );
 };
