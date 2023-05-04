@@ -9,7 +9,7 @@ const Home = () => {
   const supabase = useSupabaseClient();
 
   return (
-    <div className="pt-12 w-1/2 mx-auto">
+    <div className="pt-12 w-5/6 sm:w-4/5 md:w-3/5 lg:w-1/2 xl-1/3 mx-auto">
       {!session ? (
         <Auth
           supabaseClient={supabase}
