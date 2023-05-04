@@ -4,7 +4,8 @@ import { useQuery } from "@tanstack/react-query";
 import { useUser } from "@supabase/auth-helpers-react";
 import { useState } from "react";
 import Chat from "./components/Chat";
-
+import Image from 'next/image'
+import * as Avatar from '@radix-ui/react-avatar'
 const Home: NextPage = () => {
   const supabase = useSupabaseClient();
   const user = useUser();
@@ -50,7 +51,11 @@ const Home: NextPage = () => {
   return (
     <div className="flex h-full">
       <div className="min-h-full w-1/5 bg-[#232323]">
-        <div className="pt-1 px-2">{user?.user_metadata.avatar_url}{user?.user_metadata.name}</div>
+        <div className="pt-1 px-2 flex">
+          <div className="relative h-10 w-10">
+            <Image src={user?.user_metadata.avatar_url} alt="Profile Picture" fill />
+          </div>
+          {user?.user_metadata.name}</div>
         <ul>
           {userList?.map((user: any, index: number) => {
             return (
