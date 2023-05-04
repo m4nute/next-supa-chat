@@ -50,7 +50,7 @@ const Home: NextPage = () => {
   return (
     <div className="flex h-full">
       <div className="min-h-full w-1/5 bg-[#232323]">
-        <h1>Chats</h1>
+        <div className="pt-1 px-2">{user?.user_metadata.avatar_url}{user?.user_metadata.name}</div>
         <ul>
           {userList?.map((user: any, index: number) => {
             return (

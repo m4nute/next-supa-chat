@@ -44,10 +44,13 @@ export default function Chat({ id, receiver }: { id: number; receiver: any; }) {
 
   return (
     <div className="w-4/5">
-      <h1>{receiver}</h1>
-      <ul>
+      <div className="w-full bg-[#333333]">{receiver}</div>
+      <ul className="flex flex-col">
         {messages?.map((message: any, index: number) => {
-          return <li key={index}>{message.content}</li>;
+          return <li key={index} className="bg-gray-700 inline-block w-[12rem] py-1 px-2 rounded-xl mt-2">
+            {/* <h6 className="text-blue-400">{receiver}</h6> */}
+            <p className="text-lg opacity-90">{message.content}</p>
+          </li>;
         })}
       </ul>
       <form onSubmit={handleSubmit(submitData)} className="w-full">
