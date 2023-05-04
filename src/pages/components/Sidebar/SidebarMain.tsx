@@ -54,7 +54,7 @@ export default function Sidebar({ setSelectedUser, setSelectedChat, selectedChat
                 <button className="bg-[#1c1c1c] mx-2 text-2xl hover:text-green-200 transition-all">+</button>
             </div>
             <ul>
-                {!isLoading && filteredList?.length! > 0 ? filteredList?.map((user: any, index: number) => {
+                {filteredList?.length! > 0 ? filteredList?.map((user: any, index: number) => {
                     return (
                         <li key={index}>
                             <button
@@ -69,7 +69,7 @@ export default function Sidebar({ setSelectedUser, setSelectedChat, selectedChat
                             </button>
                         </li>
                     )
-                }) : <h2 className="text-center">No Chats Found :c</h2>}
+                }) : isLoading ? <h2>Loading</h2> : <h2 className="text-center">No Chats Found :c</h2>}
             </ul>
         </div>
     )

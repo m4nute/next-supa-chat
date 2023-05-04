@@ -1,5 +1,5 @@
 import * as Avatar from "@radix-ui/react-avatar";
-import { IconLogout } from '@tabler/icons-react';
+import LogoutDialog from "./LogoutDialog";
 
 export default function Topbar({ user }: { user: any }) {
 
@@ -20,7 +20,7 @@ export default function Topbar({ user }: { user: any }) {
                 </div>
                 <h1 className="ml-2 flex flex-col justify-center">{user?.user_metadata.name ? user?.user_metadata.name : user?.email}</h1>
             </div>
-            <button className="text-right"><IconLogout size={24} className="hover:text-red-500 transition-colors opacity-80" /></button>
+            <LogoutDialog />
         </div>
     )
 }
