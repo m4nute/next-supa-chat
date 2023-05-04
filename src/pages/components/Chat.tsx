@@ -44,10 +44,10 @@ export default function Chat({ id, receiver }: { id: number; receiver: any; }) {
 
   return (
     <div className="w-4/5">
-      <div className="w-full bg-[#262930] h-16 px-2 pt-1 flex flex-col justify-center">
+      <div className="w-full bg-[#262930] h-16 px-4 flex flex-col justify-center border-b border-gray-700">
         <h1 className="text-xl">{receiver.username}</h1>
       </div>
-      <ul className="flex flex-col">
+      <ul className="flex flex-col px-2 pt-2">
         {messages?.map((message: any, index: number) => {
           return <li key={index} className="bg-gray-700 inline-block w-[12rem] py-1 px-2 rounded-xl mt-2">
             {/* <h6 className="text-blue-400">{receiver}</h6> */}
@@ -55,7 +55,7 @@ export default function Chat({ id, receiver }: { id: number; receiver: any; }) {
           </li>;
         })}
       </ul>
-      <form onSubmit={handleSubmit(submitData)} className="w-full">
+      <form onSubmit={handleSubmit(submitData)} className="w-full px-2">
         <input
           type="text"
           placeholder="Send Message"

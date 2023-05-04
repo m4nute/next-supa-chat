@@ -5,12 +5,15 @@ import { useUser } from "@supabase/auth-helpers-react";
 import { useState } from "react";
 import Chat from "./components/Chat";
 import * as Avatar from '@radix-ui/react-avatar'
+
 const Home: NextPage = () => {
   const supabase = useSupabaseClient();
   const user = useUser();
 
   const [selectedChat, setSelectedChat] = useState<number>();
   const [selectedUser, setSelectedUser] = useState<any>();
+  const [filterText, setFilterText] = useState<string>("")
+
 
   async function getIds() {
     const { data } = await supabase
@@ -47,6 +50,10 @@ const Home: NextPage = () => {
     enabled: !!chatIds,
   });
 
+  // @ts-ignore
+  const filteredList = userList?.filter((user) => user?.username.includes(filterText))
+
+
   return (
     <div className="flex h-full">
       <div className="min-h-full w-1/5 bg-[#1c1c1c] shadow-lg border-r border-gray-700">
@@ -62,8 +69,11 @@ const Home: NextPage = () => {
           </div>
           <h1 className="text-lg ml-3 flex flex-col justify-center">{user?.user_metadata.name}</h1>
         </div>
+        <div className="my-2 w-5/6 block mx-auto">
+          <input type="text" placeholder="Search (username)" value={filterText} className="bg-[#333333] rounded-lg py-1.5 px-2 w-full" onChange={(e) => setFilterText(e.target.value)} />
+        </div>
         <ul>
-          {userList?.map((user: any, index: number) => {
+          {filteredList?.length! > 0 ? filteredList?.map((user: any, index: number) => {
             return (
               <li key={index}>
                 <button
@@ -77,8 +87,8 @@ const Home: NextPage = () => {
                   {user.username}
                 </button>
               </li>
-            );
-          })}
+            )
+          }) : <h2>No Chats Found</h2>}
         </ul>
       </div>
       {selectedChat ? (
