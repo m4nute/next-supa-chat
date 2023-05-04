@@ -27,7 +27,7 @@ const Home: NextPage = () => {
   async function getUserChats() {
     const { data } = await supabase
       .from("chat_users")
-      .select("profiles (username, avatar_url)")
+      .select("profiles (username, avatar_url, email)")
       .neq("user_id", user?.id)
       .in("chat_id", chatIds!);
     // @ts-ignore
@@ -77,7 +77,7 @@ const Home: NextPage = () => {
           <input type="text" placeholder="Search (username)" value={filterText} className="bg-[#333333] rounded-lg py-1.5 px-2 w-full" onChange={(e) => setFilterText(e.target.value)} />
         </div>
         <ul>
-          {filteredList?.length! > 0 ? filteredList?.map((user: any, index: number) => {
+          {!isLoading && filteredList?.length! > 0 ? filteredList?.map((user: any, index: number) => {
             return (
               <li key={index}>
                 <button
@@ -92,7 +92,7 @@ const Home: NextPage = () => {
                 </button>
               </li>
             )
-          }) : <h2>No Chats Found</h2>}
+          }) : <h2 className="text-center">No Chats Found</h2>}
         </ul>
       </div>
       {selectedChat ? (
