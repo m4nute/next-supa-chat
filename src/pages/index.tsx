@@ -17,7 +17,7 @@ const Home: NextPage = () => {
       {selectedChat ? (
         <Chat id={selectedChat} receiver={selectedUser} />
       ) : (
-        <h1 className="mt-6 w-full text-center">Select a Chat!</h1>
+        <h1 className="mt-6 w-4/5 text-center">Select a Chat!</h1>
       )}
     </div>
   );
