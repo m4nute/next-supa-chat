@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 import { useQuery } from "@tanstack/react-query";
 import { IconBrandTelegram } from "@tabler/icons-react";
-import * as Avatar from "@radix-ui/react-avatar";
+import ChatTopbar from "./ChatTopbar";
 
 export default function Chat({ id, receiver }: { id: number; receiver: any }) {
   type formData = {
@@ -44,21 +44,7 @@ export default function Chat({ id, receiver }: { id: number; receiver: any }) {
 
   return (
     <div className="w-4/5">
-      <div className="flex h-16 w-full border-b  border-gray-700 bg-[#262930] px-4">
-        <Avatar.Root className="h-[2.5rem] w-[2.5rem] select-none items-center  overflow-hidden rounded-full align-middle">
-          <Avatar.Image
-            className="h-full w-full rounded-[inherit] object-cover"
-            src={receiver?.avatar_url}
-            alt="Profile Picture"
-          />
-          <Avatar.Fallback className="leading-1 flex h-full w-full items-center justify-center bg-white text-[15px] font-medium text-black">
-            {receiver?.email?.slice(0, 2)}
-          </Avatar.Fallback>
-        </Avatar.Root>
-        <h1 className="flex flex-col justify-center text-xl">
-          {receiver.username ? receiver.username : receiver.email}
-        </h1>
-      </div>
+      <ChatTopbar receiver={receiver} />
       <ul className="px-10 pt-2">
         {messages?.map((message: any, index: number) => {
           return (
