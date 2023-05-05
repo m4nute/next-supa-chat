@@ -1,11 +1,11 @@
-import { useState } from "react";
-import Topbar from "./Topbar/TopbarMain";
-import SearchBar from "./OpenedChats/SearchBar";
-import AddChatButton from "./OpenedChats/AddChatButton";
-import OpenedChats from "./OpenedChats/OpenedChatsMain";
+import { useState } from "react"
+import Topbar from "./Topbar/TopbarMain"
+import SearchBar from "./OpenedChats/SearchBar"
+import AddChatButton from "./OpenedChats/AddChatButton"
+import OpenedChats from "./OpenedChats/OpenedChatsMain"
 
 export default function Sidebar({ user }: any) {
-  const [filterText, setFilterText] = useState<string>("");
+  const [filterText, setFilterText] = useState<string>("")
 
   return (
     <div className="min-h-full w-1/5 border-r border-gray-700 bg-input">
@@ -16,5 +16,5 @@ export default function Sidebar({ user }: any) {
       </div>
       <OpenedChats user={user} filterText={filterText} />
     </div>
-  );
+  )
 }
