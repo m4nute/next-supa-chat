@@ -1,6 +1,7 @@
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useQuery } from "@tanstack/react-query";
 import useStore from "~/zustand/globalState";
+import BeatLoader from "react-spinners/BeatLoader";
 
 export default function OpenedChats({
   user,
@@ -43,35 +44,37 @@ export default function OpenedChats({
     enabled: !!user?.id,
   });
 
-  const filteredList = chatInfos?.filter((chat) =>
+  const filteredChats = chatInfos?.filter((chat) =>
     //   @ts-ignore
     chat.user?.email.includes(filterText)
   );
 
   return (
     <ul>
-      {filteredList?.length! > 0 ? (
-        filteredList?.map((chat: any, index: number) => {
-          return (
-            <li key={index}>
-              <button
-                className={`w-full border-y border-gray-600 px-3 py-2 text-sm ${
-                  selectedChat === chat.chatId && "bg-[#292929]"
-                }`}
-                onClick={() => {
-                  setSelectedChat(chat.chatId);
-                  setSelectedUser(chat.user);
-                }}
-              >
-                {chat.user.email.split("@")[0]}
-              </button>
-            </li>
-          );
-        })
-      ) : isLoading ? (
-        <h2 className="text-center">Loading</h2>
+      {filteredChats?.length ? (
+        filteredChats.map((chat: any, index: number) => (
+          <li key={index}>
+            <button
+              className={`w-full border-y border-gray-600 px-3 py-2 text-sm ${
+                selectedChat === chat.chatId && "bg-[#292929]"
+              }`}
+              onClick={() => {
+                setSelectedChat(chat.chatId);
+                setSelectedUser(chat.user);
+              }}
+            >
+              {chat.user.email.split("@")[0]}
+            </button>
+          </li>
+        ))
       ) : (
-        <h2 className="text-center">No Chats Found :c</h2>
+        <h2 className="text-center">
+          {isLoading ? (
+            <BeatLoader loading={true} size={10} color="#d2d2d2" />
+          ) : (
+            "No Chats Found :c"
+          )}
+        </h2>
       )}
     </ul>
   );

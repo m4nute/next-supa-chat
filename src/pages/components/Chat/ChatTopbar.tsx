@@ -4,7 +4,6 @@ import useStore from "~/zustand/globalState";
 export default function ChatTopbar() {
   const selectedUser = useStore((state) => [state.selectedUser]);
 
-  console.log(selectedUser);
   return (
     <div className="flex h-16 w-full border-b  border-gray-700 bg-[#262930] px-4">
       <div className="flex flex-col justify-center">
