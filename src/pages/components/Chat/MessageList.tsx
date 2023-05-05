@@ -48,7 +48,7 @@ export default function MessageList({ user }: any) {
               message.sender_id === user.id && "justify-end"
             }`}
           >
-            <div className="flex rounded-xl bg-[#292929] py-1.5 pl-4 pr-2">
+            <div className="bg-message flex rounded-xl py-1.5 pl-4 pr-2">
               <p className="text-lg opacity-90">{message.content}</p>
               <span className="ml-2 flex flex-col justify-end text-[0.8rem] opacity-80">
                 {new Date(message.created_at).toLocaleTimeString("default", {

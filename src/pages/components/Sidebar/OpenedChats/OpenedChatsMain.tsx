@@ -56,7 +56,7 @@ export default function OpenedChats({
           <li key={index}>
             <button
               className={`w-full border-y border-gray-600 px-3 py-2 text-sm ${
-                selectedChat === chat.chatId && "bg-[#292929]"
+                selectedChat === chat.chatId && "bg-message"
               }`}
               onClick={() => {
                 setSelectedChat(chat.chatId);

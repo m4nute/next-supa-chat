@@ -10,7 +10,7 @@ export default function SearchBar({
       type="text"
       placeholder="Search (email)"
       value={filterText}
-      className="ml-2 w-full rounded-lg bg-[#333333] px-2 py-1.5"
+      className="ml-2 w-full rounded-lg bg-searchBar px-2 py-1.5"
       onChange={(e) => setFilterText(e.target.value)}
     />
   );

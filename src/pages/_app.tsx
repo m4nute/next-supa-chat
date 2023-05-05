@@ -27,7 +27,7 @@ function MyApp({
         initialSession={pageProps.initialSession}
       >
         <QueryClientProvider client={queryClient}>
-          <main className="h-screen bg-[#0C0E12] text-white">
+          <main className="h-screen bg-rootBg text-white">
             <Component {...pageProps} />
           </main>
         </QueryClientProvider>

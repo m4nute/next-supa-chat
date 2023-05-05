@@ -3,7 +3,7 @@ import LogoutDialog from "./LogoutDialog";
 
 export default function Topbar({ user }: { user: any }) {
   return (
-    <div className=" flex h-16 justify-between bg-[#262930] px-2">
+    <div className=" flex h-16 justify-between bg-topbar px-2">
       <div className="flex">
         <div className="flex flex-col justify-center">
           <UserAvatar

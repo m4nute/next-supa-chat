@@ -8,7 +8,7 @@ export default function Sidebar({ user }: any) {
   const [filterText, setFilterText] = useState<string>("");
 
   return (
-    <div className="min-h-full w-1/5 border-r border-gray-700 bg-[#1c1c1c] shadow-lg">
+    <div className="min-h-full w-1/5 border-r border-gray-700 bg-input">
       <Topbar user={user} />
       <div className="my-3 flex">
         <SearchBar filterText={filterText} setFilterText={setFilterText} />

@@ -81,7 +81,7 @@ export default function AddChatButton() {
       }}
     >
       <Dialog.Trigger asChild>
-        <button className="mx-2 justify-center bg-[#1c1c1c] text-2xl transition-all hover:text-green-400">
+        <button className="mx-2 justify-center bg-input text-2xl transition-all hover:text-green-400">
           +
         </button>
       </Dialog.Trigger>
@@ -104,7 +104,7 @@ export default function AddChatButton() {
                 Email
               </label>
               <input
-                className="inline-flex h-[35px] w-full flex-1 items-center justify-center rounded-[4px] border border-gray-700 bg-[#1f1f1f] px-[10px] text-[15px] text-white "
+                className="inline-flex h-[35px] w-full flex-1 items-center justify-center rounded-[4px] border border-gray-700 bg-dialogButton px-[10px] text-[15px] text-white"
                 id="email"
                 placeholder="example@gmail.com"
                 autoComplete="off"
@@ -112,7 +112,7 @@ export default function AddChatButton() {
               />
               <button
                 type="submit"
-                className="rounded-lg bg-[#1f1f1f] px-3 py-2 transition-all hover:bg-[#4f4f4f]"
+                className="rounded-lg bg-dialogButton px-3 py-2 transition-all hover:bg-dialogInput"
               >
                 Check
               </button>

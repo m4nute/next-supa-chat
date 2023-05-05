@@ -15,10 +15,17 @@ const Home = () => {
         <br />
         <Link
           href="/"
-          className="rounded-xl bg-[#232323] px-4 py-3 transition-all hover:bg-[#2f2f2f]"
+          className="rounded-xl bg-message px-4 py-3 transition-all hover:bg-dialogInput"
         >
           Start Chatting
         </Link>
+        <br />
+        <button
+          className="mt-6 rounded-xl bg-message px-4 py-3 transition-all hover:bg-dialogInput"
+          onClick={() => supabase.auth.signOut()}
+        >
+          Logout
+        </button>
       </div>
     );
   }
