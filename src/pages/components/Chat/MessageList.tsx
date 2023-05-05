@@ -1,5 +1,6 @@
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useQuery } from "@tanstack/react-query";
+import { useEffect } from "react";
 
 export default function MessageList({ user, id }: any) {
   const supabase = useSupabaseClient();
@@ -8,10 +9,26 @@ export default function MessageList({ user, id }: any) {
     const { data } = await supabase.from("messages").select().eq("chat_id", id);
     return data;
   }
-  const { data: messages } = useQuery({
+  const { data: messages, refetch } = useQuery({
     queryKey: ["getChatMessages"],
     queryFn: getMessages,
   });
+
+  useEffect(() => {
+    const channel = supabase
+      .channel("realtime messages")
+      .on(
+        "postgres_changes",
+        {
+          event: "UPDATE",
+          schema: "public",
+          table: "chats",
+          filter: `id=eq.${id}`,
+        },
+        () => refetch()
+      )
+      .subscribe();
+  }, []);
 
   return (
     <ul className="px-10 pt-2">
