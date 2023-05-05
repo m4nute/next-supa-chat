@@ -11,64 +11,59 @@ export default function OpenedChats({
 }) {
   const supabase = useSupabaseClient();
 
-  const { data: chatIds } = useQuery({
-    queryKey: ["getChatIds"],
-    queryFn: getIds,
-    enabled: !!user?.id,
-  });
-
-  async function getIds() {
-    const { data } = await supabase
-      .from("chat_users")
-      .select("chat_id")
-      .eq("user_id", user?.id);
-
-    return data?.map((obj) => obj.chat_id);
-  }
-
   const [selectedChat, setSelectedChat, setSelectedUser] = useStore((state) => [
     state.selectedChat,
     state.setSelectedChat,
     state.setSelectedUser,
   ]);
 
-  const { data: userList, isLoading } = useQuery({
-    queryKey: ["getChats"],
-    queryFn: getUserChats,
-    enabled: !!chatIds,
+  const { data: chatInfos, isLoading } = useQuery({
+    queryKey: ["getChatInfos"],
+    queryFn: async () => {
+      const { data: chatIds } = await supabase
+        .from("chat_users")
+        .select("chat_id")
+        .eq("user_id", user?.id);
+
+      const { data: userList } = await supabase
+        .from("chat_users")
+        .select("profiles (avatar_url, email)")
+        .neq("user_id", user?.id)
+        .in(
+          "chat_id",
+          // @ts-ignore
+          chatIds?.map(({ chat_id }) => chat_id)
+        );
+
+      return chatIds?.map((chat, index) => ({
+        chatId: chat.chat_id,
+        user: userList?.[index]?.profiles,
+      }));
+    },
+    enabled: !!user?.id,
   });
 
-  async function getUserChats() {
-    const { data } = await supabase
-      .from("chat_users")
-      .select("profiles (avatar_url, email)")
-      .neq("user_id", user?.id)
-      .in("chat_id", chatIds!);
-    // @ts-ignore
-    return data?.map((obj) => obj?.profiles);
-  }
-
-  const filteredList = userList?.filter((user) =>
-    // @ts-ignore
-    user?.email.includes(filterText)
+  const filteredList = chatInfos?.filter((chat) =>
+    //   @ts-ignore
+    chat.user?.email.includes(filterText)
   );
 
   return (
     <ul>
       {filteredList?.length! > 0 ? (
-        filteredList?.map((user: any, index: number) => {
+        filteredList?.map((chat: any, index: number) => {
           return (
             <li key={index}>
               <button
                 className={`w-full border-y border-gray-600 px-3 py-2 text-sm ${
-                  selectedChat === chatIds?.[index] && "bg-[#292929]"
+                  selectedChat === chat.chatId && "bg-[#292929]"
                 }`}
                 onClick={() => {
-                  setSelectedChat(chatIds?.[index]);
-                  setSelectedUser(user);
+                  setSelectedChat(chat.chatId);
+                  setSelectedUser(chat.user);
                 }}
               >
-                {user.email.split("@")[0]}
+                {chat.user.email.split("@")[0]}
               </button>
             </li>
           );
