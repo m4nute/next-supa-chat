@@ -28,6 +28,9 @@ export default function MessageList({ user, id }: any) {
         () => refetch()
       )
       .subscribe();
+    return () => {
+      supabase.removeChannel(channel);
+    };
   }, []);
 
   return (
