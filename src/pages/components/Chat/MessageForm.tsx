@@ -40,7 +40,7 @@ export default function MessageForm({ user, id }: any) {
       <button
         type="submit"
         className="ml-4 text-center"
-        disabled={getValues("message").length > 0}
+        disabled={getValues("message").length < 1}
       >
         <IconBrandTelegram
           size={24}
