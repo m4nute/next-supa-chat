@@ -2,8 +2,9 @@ import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import Topbar from "./Topbar/TopbarMain";
-import SearchBar from "./SearchBar";
-import AddChatButton from "./AddChatButton";
+import SearchBar from "./OpenedChats/SearchBar";
+import AddChatButton from "./OpenedChats/AddChatButton";
+import OpenedChats from "./OpenedChats/OpenedChatsMain";
 
 export default function Sidebar({
   setSelectedUser,
@@ -20,17 +21,6 @@ export default function Sidebar({
     enabled: !!user?.id,
   });
 
-  const { isLoading, data: userList } = useQuery({
-    queryKey: ["getChats"],
-    queryFn: getUserChats,
-    enabled: !!chatIds,
-  });
-
-  const filteredList = userList?.filter((user) =>
-    // @ts-ignore
-    user?.email.includes(filterText)
-  );
-
   async function getIds() {
     const { data } = await supabase
       .from("chat_users")
@@ -40,16 +30,6 @@ export default function Sidebar({
     return data?.map((obj) => obj.chat_id);
   }
 
-  async function getUserChats() {
-    const { data } = await supabase
-      .from("chat_users")
-      .select("profiles (avatar_url, email)")
-      .neq("user_id", user?.id)
-      .in("chat_id", chatIds!);
-    // @ts-ignore
-    return data?.map((obj) => obj?.profiles);
-  }
-
   return (
     <div className="min-h-full w-1/5 border-r border-gray-700 bg-[#1c1c1c] shadow-lg">
       <Topbar user={user} />
@@ -57,31 +37,7 @@ export default function Sidebar({
         <SearchBar filterText={filterText} setFilterText={setFilterText} />
         <AddChatButton />
       </div>
-      <ul>
-        {filteredList?.length! > 0 ? (
-          filteredList?.map((user: any, index: number) => {
-            return (
-              <li key={index}>
-                <button
-                  className={`w-full border-y border-gray-600 px-3 py-2 text-sm ${
-                    selectedChat === chatIds?.[index] && "bg-[#292929]"
-                  }`}
-                  onClick={() => {
-                    setSelectedChat(chatIds?.[index]);
-                    setSelectedUser(user);
-                  }}
-                >
-                  {user.email.split("@")[0]}
-                </button>
-              </li>
-            );
-          })
-        ) : isLoading ? (
-          <h2 className="text-center">Loading</h2>
-        ) : (
-          <h2 className="text-center">No Chats Found :c</h2>
-        )}
-      </ul>
+      <OpenedChats chatList={filteredList} />
     </div>
   );
 }
