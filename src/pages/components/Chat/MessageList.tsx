@@ -10,7 +10,7 @@ export default function MessageList({ user, id }: any) {
     return data;
   }
   const { data: messages, refetch } = useQuery({
-    queryKey: ["getChatMessages"],
+    queryKey: ["getChatMessages", id],
     queryFn: getMessages,
   });
 
@@ -31,7 +31,7 @@ export default function MessageList({ user, id }: any) {
     return () => {
       supabase.removeChannel(channel);
     };
-  }, []);
+  }, [id]);
 
   return (
     <ul className="px-10 pt-2">

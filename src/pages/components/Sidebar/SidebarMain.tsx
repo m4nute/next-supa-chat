@@ -1,6 +1,6 @@
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Topbar from "./Topbar/TopbarMain";
 import SearchBar from "./SearchBar";
 import AddChatButton from "./AddChatButton";
