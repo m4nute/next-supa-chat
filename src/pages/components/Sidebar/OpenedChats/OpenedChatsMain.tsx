@@ -9,30 +9,34 @@ export default function OpenedChats({ user, filterText }: { user: any; filterTex
   const [selectedChat, setSelectedChat, setSelectedUser] = useStore((state) => [state.selectedChat, state.setSelectedChat, state.setSelectedUser])
   const supabase = useSupabaseClient()
 
-  const { data: chatInfos, isLoading } = useQuery({
+  const {
+    data: chatInfos,
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ["getChatInfos"],
     queryFn: () => getActiveChats(user.id, supabase),
     enabled: !!user?.id,
   })
 
-  // useEffect(() => {
-  //   const channel = supabase
-  //     .channel("realtime chats")
-  //     .on(
-  //       "postgres_changes",
-  //       {
-  //         event: "INSERT",
-  //         schema: "public",
-  //         table: "chat_users",
-  //         filter: `user_id=eq.${user.id}`,
-  //       },
-  //       () => refetch()
-  //     )
-  //     .subscribe()
-  //   return () => {
-  //     supabase.removeChannel(channel)
-  //   }
-  // }, [])
+  useEffect(() => {
+    const channel = supabase
+      .channel("realtime chats")
+      .on(
+        "postgres_changes",
+        {
+          event: "INSERT",
+          schema: "public",
+          table: "chat_users",
+          filter: `user_id=eq.${user.id}`,
+        },
+        () => refetch()
+      )
+      .subscribe()
+    return () => {
+      supabase.removeChannel(channel)
+    }
+  }, [])
 
   const filteredChats = chatInfos?.filter((chat) =>
     //   @ts-ignore

@@ -22,15 +22,10 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 
   if (!session)
     return {
-      redirect: {
-        destination: "/auth",
-        permanent: false,
-      },
+      redirect: { destination: "/auth", permanent: false },
     }
 
   return {
-    props: {
-      user: session.user,
-    },
+    props: { user: session.user },
   }
 }
