@@ -2,20 +2,23 @@ import { Auth } from "@supabase/auth-ui-react";
 // @ts-ignore
 import { ThemeSupa } from "@supabase/auth-ui-shared";
 import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
-import { createServerSupabaseClient } from "@supabase/auth-helpers-nextjs";
-import { GetServerSidePropsContext } from "next";
 import Link from "next/link";
 
 const Home = () => {
   const supabase = useSupabaseClient();
   const user = useUser();
-  console.log(user);
 
   if (user) {
     return (
-      <div>
-        <h1>Logged In</h1>
-        <Link href="/">Start Chatting</Link>
+      <div className="pt-10 text-center">
+        <h1>Logged In Successfully!</h1>
+        <br />
+        <Link
+          href="/"
+          className="rounded-xl bg-[#232323] px-4 py-3 transition-all hover:bg-[#2f2f2f]"
+        >
+          Start Chatting
+        </Link>
       </div>
     );
   }

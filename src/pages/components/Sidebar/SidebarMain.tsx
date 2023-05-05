@@ -44,7 +44,7 @@ export default function Sidebar({ setSelectedUser, setSelectedChat, selectedChat
             .in("chat_id", chatIds!);
         // @ts-ignore
         return data?.map((obj) => obj?.profiles);
-    }
+     }
 
     return (
         <div className="min-h-full w-1/5 bg-[#1c1c1c] shadow-lg border-r border-gray-700">

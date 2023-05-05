@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Chat from "./components/Chat";
+import Chat from "./components/Chat/ChatMain";
 import Sidebar from "./components/Sidebar/SidebarMain";
 import { NextPage } from "next";
 
