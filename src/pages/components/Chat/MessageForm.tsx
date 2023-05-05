@@ -14,12 +14,7 @@ export default function MessageForm({ user, id }: any) {
     message: z.string().min(1).max(500),
   });
 
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm<formData>({
+  const { register, handleSubmit, reset, getValues } = useForm<formData>({
     resolver: zodResolver(schema),
   });
 
@@ -42,17 +37,16 @@ export default function MessageForm({ user, id }: any) {
         className="h-12 w-full rounded-lg bg-[#1c1c1c] px-4"
         autoComplete="off"
       />
-      <button type="submit" className="ml-4 text-center">
+      <button
+        type="submit"
+        className="ml-4 text-center"
+        disabled={getValues("message").length > 0}
+      >
         <IconBrandTelegram
           size={24}
           className="stroke-1 transition-all hover:stroke-2 hover:opacity-80"
         />
       </button>
-
-      <br />
-      {errors.message && (
-        <span className="text-red-500">{errors.message.message}</span>
-      )}
     </form>
   );
 }
