@@ -2,6 +2,7 @@ import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import Topbar from "./Topbar/TopbarMain";
+import SearchBar from "./SearchBar";
 
 export default function Sidebar({
   setSelectedUser,
@@ -51,18 +52,7 @@ export default function Sidebar({
   return (
     <div className="min-h-full w-1/5 border-r border-gray-700 bg-[#1c1c1c] shadow-lg">
       <Topbar user={user} />
-      <div className="my-3 flex">
-        <input
-          type="text"
-          placeholder="Search (username)"
-          value={filterText}
-          className="ml-2 w-full rounded-lg bg-[#333333] px-2 py-1.5"
-          onChange={(e) => setFilterText(e.target.value)}
-        />
-        <button className="mx-2 bg-[#1c1c1c] text-2xl transition-all hover:text-green-200">
-          +
-        </button>
-      </div>
+      <SearchBar filterText={filterText} setFilterText={setFilterText} />
       <ul>
         {filteredList?.length! > 0 ? (
           filteredList?.map((user: any, index: number) => {
