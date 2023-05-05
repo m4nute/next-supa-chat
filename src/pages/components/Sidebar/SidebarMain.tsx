@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import Topbar from "./Topbar/TopbarMain";
 import SearchBar from "./SearchBar";
+import AddChatButton from "./AddChatButton";
 
 export default function Sidebar({
   setSelectedUser,
@@ -54,9 +55,7 @@ export default function Sidebar({
       <Topbar user={user} />
       <div className="my-3 flex">
         <SearchBar filterText={filterText} setFilterText={setFilterText} />
-        <button className="mx-2 bg-[#1c1c1c] text-2xl transition-all hover:text-green-200">
-          +
-        </button>
+        <AddChatButton />
       </div>
       <ul>
         {filteredList?.length! > 0 ? (
