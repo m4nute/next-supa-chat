@@ -1,7 +1,7 @@
-import Chat from "./components/Chat/ChatMain";
-import Sidebar from "./components/Sidebar/SidebarMain";
-import { GetServerSidePropsContext, NextPage } from "next";
-import { createServerSupabaseClient } from "@supabase/auth-helpers-nextjs";
+import Chat from "./components/Chat/ChatMain"
+import Sidebar from "./components/Sidebar/SidebarMain"
+import { GetServerSidePropsContext, NextPage } from "next"
+import { createServerSupabaseClient } from "@supabase/auth-helpers-nextjs"
 
 const Home: NextPage = ({ user }: any) => {
   return (
@@ -9,16 +9,16 @@ const Home: NextPage = ({ user }: any) => {
       <Sidebar user={user} />
       <Chat />
     </div>
-  );
-};
+  )
+}
 
-export default Home;
+export default Home
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
-  const supabase = createServerSupabaseClient(ctx);
+  const supabase = createServerSupabaseClient(ctx)
   const {
     data: { session },
-  } = await supabase.auth.getSession();
+  } = await supabase.auth.getSession()
 
   if (!session)
     return {
@@ -26,11 +26,11 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
         destination: "/auth",
         permanent: false,
       },
-    };
+    }
 
   return {
     props: {
       user: session.user,
     },
-  };
-};
+  }
+}

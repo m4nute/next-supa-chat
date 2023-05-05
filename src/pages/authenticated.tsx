@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "next/link"
 
 export default function authenticated() {
   return (
@@ -8,5 +8,5 @@ export default function authenticated() {
         Start Chatting
       </Link>
     </div>
-  );
+  )
 }
