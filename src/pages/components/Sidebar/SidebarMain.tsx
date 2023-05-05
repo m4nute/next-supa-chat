@@ -28,7 +28,7 @@ export default function Sidebar({
 
   const filteredList = userList?.filter((user) =>
     // @ts-ignore
-    user?.username.includes(filterText)
+    user?.email.includes(filterText)
   );
 
   async function getIds() {
@@ -43,7 +43,7 @@ export default function Sidebar({
   async function getUserChats() {
     const { data } = await supabase
       .from("chat_users")
-      .select("profiles (username, avatar_url, email)")
+      .select("profiles (avatar_url, email)")
       .neq("user_id", user?.id)
       .in("chat_id", chatIds!);
     // @ts-ignore
@@ -63,7 +63,7 @@ export default function Sidebar({
             return (
               <li key={index}>
                 <button
-                  className={`w-full border-y border-gray-600 px-3 py-2 ${
+                  className={`w-full border-y border-gray-600 px-3 py-2 text-sm ${
                     selectedChat === chatIds?.[index] && "bg-[#292929]"
                   }`}
                   onClick={() => {
@@ -71,7 +71,7 @@ export default function Sidebar({
                     setSelectedUser(user);
                   }}
                 >
-                  {user.username}
+                  {user.email.split("@")[0]}
                 </button>
               </li>
             );

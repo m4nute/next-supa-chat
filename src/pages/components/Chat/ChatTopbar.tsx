@@ -15,9 +15,7 @@ export default function ChatTopbar({ receiver }: { receiver: any }) {
           </Avatar.Fallback>
         </Avatar.Root>
       </div>
-      <h1 className="ml-2 flex flex-col justify-center">
-        {receiver.username ? receiver.username : receiver.email}
-      </h1>
+      <h1 className="ml-2 flex flex-col justify-center">{receiver.email}</h1>
     </div>
   );
 }
