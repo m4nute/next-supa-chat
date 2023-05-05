@@ -3,7 +3,7 @@ import * as Avatar from "@radix-ui/react-avatar";
 export default function ChatTopbar({ receiver }: { receiver: any }) {
   return (
     <div className="flex h-16 w-full border-b  border-gray-700 bg-[#262930] px-4">
-      <Avatar.Root className="h-[2.5rem] w-[2.5rem] select-none items-center  overflow-hidden rounded-full align-middle">
+      <Avatar.Root className="flex h-[2.5rem] w-[2.5rem] select-none  flex-col items-center justify-center overflow-hidden rounded-full align-middle">
         <Avatar.Image
           className="h-full w-full rounded-[inherit] object-cover"
           src={receiver?.avatar_url}
