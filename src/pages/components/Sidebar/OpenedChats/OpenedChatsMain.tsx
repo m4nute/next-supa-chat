@@ -2,15 +2,37 @@ import { useQuery } from "@tanstack/react-query"
 import useStore from "~/zustand/globalState"
 import BeatLoader from "react-spinners/BeatLoader"
 import { getActiveChats } from "~/pages/queries/queryFns"
+import { useSupabaseClient } from "@supabase/auth-helpers-react"
+import { useEffect } from "react"
 
 export default function OpenedChats({ user, filterText }: { user: any; filterText: string }) {
   const [selectedChat, setSelectedChat, setSelectedUser] = useStore((state) => [state.selectedChat, state.setSelectedChat, state.setSelectedUser])
+  const supabase = useSupabaseClient()
 
   const { data: chatInfos, isLoading } = useQuery({
     queryKey: ["getChatInfos"],
-    queryFn: () => getActiveChats(user.id),
+    queryFn: () => getActiveChats(user.id, supabase),
     enabled: !!user?.id,
   })
+
+  // useEffect(() => {
+  //   const channel = supabase
+  //     .channel("realtime chats")
+  //     .on(
+  //       "postgres_changes",
+  //       {
+  //         event: "INSERT",
+  //         schema: "public",
+  //         table: "chat_users",
+  //         filter: `user_id=eq.${user.id}`,
+  //       },
+  //       () => refetch()
+  //     )
+  //     .subscribe()
+  //   return () => {
+  //     supabase.removeChannel(channel)
+  //   }
+  // }, [])
 
   const filteredChats = chatInfos?.filter((chat) =>
     //   @ts-ignore

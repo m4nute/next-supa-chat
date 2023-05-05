@@ -1,8 +1,6 @@
-import { useSupabaseClient } from "@supabase/auth-helpers-react"
+import { SupabaseClient } from "@supabase/auth-helpers-nextjs"
 
-export const getActiveChats = async (userId: number) => {
-  const supabase = useSupabaseClient()
-
+export const getActiveChats = async (userId: number, supabase: SupabaseClient<any, "public", any>) => {
   const { data: chatIds } = await supabase.from("chat_users").select("chat_id").eq("user_id", userId)
 
   const { data: userList } = await supabase
