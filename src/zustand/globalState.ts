@@ -1,6 +1,16 @@
 import { create } from "zustand";
 
-const useStore = create((set) => ({
+type Store = {
+  selectedChat: number | null;
+  selectedUser: any;
+};
+
+type Setters = {
+  setSelectedChat: (chatId: number) => void;
+  setSelectedUser: (user: any) => void;
+};
+
+const useStore = create<Store & Setters>((set) => ({
   selectedChat: null,
   selectedUser: null,
   setSelectedChat: (chatId: number) => set(() => ({ selectedChat: chatId })),

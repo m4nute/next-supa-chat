@@ -1,16 +1,21 @@
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
+import useStore from "~/zustand/globalState";
 
-export default function MessageList({ user, id }: any) {
+export default function MessageList({ user }: any) {
+  const selectedChat = useStore((state) => state.selectedChat);
   const supabase = useSupabaseClient();
 
   async function getMessages() {
-    const { data } = await supabase.from("messages").select().eq("chat_id", id);
+    const { data } = await supabase
+      .from("messages")
+      .select()
+      .eq("chat_id", selectedChat);
     return data;
   }
   const { data: messages, refetch } = useQuery({
-    queryKey: ["getChatMessages", id],
+    queryKey: ["getChatMessages", selectedChat],
     queryFn: getMessages,
   });
 
@@ -23,7 +28,7 @@ export default function MessageList({ user, id }: any) {
           event: "UPDATE",
           schema: "public",
           table: "chats",
-          filter: `id=eq.${id}`,
+          filter: `id=eq.${selectedChat}`,
         },
         () => refetch()
       )
@@ -31,7 +36,7 @@ export default function MessageList({ user, id }: any) {
     return () => {
       supabase.removeChannel(channel);
     };
-  }, [id]);
+  }, [selectedChat]);
 
   return (
     <ul className="px-10 pt-2">

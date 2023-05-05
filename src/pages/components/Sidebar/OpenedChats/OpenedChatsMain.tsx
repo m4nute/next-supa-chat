@@ -1,10 +1,38 @@
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useQuery } from "@tanstack/react-query";
+import useStore from "~/zustand/globalState";
 
-export default function OpenedChats() {
+export default function OpenedChats({
+  user,
+  filterText,
+}: {
+  user: any;
+  filterText: string;
+}) {
   const supabase = useSupabaseClient();
 
-  const { isLoading, data: userList } = useQuery({
+  const { data: chatIds } = useQuery({
+    queryKey: ["getChatIds"],
+    queryFn: getIds,
+    enabled: !!user?.id,
+  });
+
+  async function getIds() {
+    const { data } = await supabase
+      .from("chat_users")
+      .select("chat_id")
+      .eq("user_id", user?.id);
+
+    return data?.map((obj) => obj.chat_id);
+  }
+
+  const [selectedChat, setSelectedChat, setSelectedUser] = useStore((state) => [
+    state.selectedChat,
+    state.setSelectedChat,
+    state.setSelectedUser,
+  ]);
+
+  const { data: userList, isLoading } = useQuery({
     queryKey: ["getChats"],
     queryFn: getUserChats,
     enabled: !!chatIds,
