@@ -1,4 +1,4 @@
-import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
+import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import Topbar from "./Topbar/TopbarMain";
@@ -7,8 +7,8 @@ export default function Sidebar({
   setSelectedUser,
   setSelectedChat,
   selectedChat,
+  user,
 }: any) {
-  const user = useUser();
   const supabase = useSupabaseClient();
   const [filterText, setFilterText] = useState<string>("");
 

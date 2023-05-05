@@ -1,9 +1,10 @@
 import { useState } from "react";
 import Chat from "./components/Chat/ChatMain";
 import Sidebar from "./components/Sidebar/SidebarMain";
-import { NextPage } from "next";
+import { GetServerSidePropsContext, NextPage } from "next";
+import { createServerSupabaseClient } from "@supabase/auth-helpers-nextjs";
 
-const Home: NextPage = () => {
+const Home: NextPage = ({ user }: any) => {
   const [selectedChat, setSelectedChat] = useState<number>();
   const [selectedUser, setSelectedUser] = useState<any>();
 
@@ -13,6 +14,7 @@ const Home: NextPage = () => {
         setSelectedChat={setSelectedChat}
         setSelectedUser={setSelectedUser}
         selectedChat={selectedChat}
+        user={user}
       />
       {selectedChat ? (
         <Chat id={selectedChat} receiver={selectedUser} />
@@ -24,3 +26,26 @@ const Home: NextPage = () => {
 };
 
 export default Home;
+
+export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
+  // Create authenticated Supabase Client
+  const supabase = createServerSupabaseClient(ctx);
+  // Check if we have a session
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+
+  if (!session)
+    return {
+      redirect: {
+        destination: "/auth",
+        permanent: false,
+      },
+    };
+
+  return {
+    props: {
+      user: session.user,
+    },
+  };
+};
