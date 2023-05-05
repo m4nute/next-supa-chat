@@ -1,13 +1,13 @@
-import ChatTopbar from "./ChatTopbar";
-import MessageList from "./MessageList";
-import MessageForm from "./MessageForm";
-import { useUser } from "@supabase/auth-helpers-react";
-import useStore from "~/zustand/globalState";
+import ChatTopbar from "./ChatTopbar"
+import MessageList from "./Messages/MessageList"
+import MessageForm from "./Messages/MessageForm"
+import { useUser } from "@supabase/auth-helpers-react"
+import useStore from "~/zustand/globalState"
 
 export default function Chat() {
-  const user = useUser();
+  const user = useUser()
 
-  const [selectedChat] = useStore((state) => [state.selectedChat]);
+  const [selectedChat] = useStore((state) => [state.selectedChat])
 
   return (
     <div className="w-4/5">
@@ -21,5 +21,5 @@ export default function Chat() {
         <h1 className="mt-6 text-center">Select a Chat!</h1>
       )}
     </div>
-  );
+  )
 }
