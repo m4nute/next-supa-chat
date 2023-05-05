@@ -3,8 +3,11 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { IconBrandTelegram } from "@tabler/icons-react";
+import useStore from "~/zustand/globalState";
 
-export default function MessageForm({ user, id }: any) {
+export default function MessageForm({ user }: any) {
+  const selectedChat = useStore((state) => state.selectedChat);
+
   type formData = {
     message: string;
   };
@@ -13,14 +16,14 @@ export default function MessageForm({ user, id }: any) {
     message: z.string().min(1).max(500),
   });
 
-  const { register, handleSubmit, reset, getValues } = useForm<formData>({
+  const { register, handleSubmit, reset } = useForm<formData>({
     resolver: zodResolver(schema),
   });
 
   const submitData = async ({ message }: formData) => {
-    const { error } = await supabase
+    await supabase
       .from("messages")
-      .insert({ sender_id: user?.id, chat_id: id, content: message });
+      .insert({ sender_id: user?.id, chat_id: selectedChat, content: message });
     reset();
   };
 
