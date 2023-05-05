@@ -52,7 +52,12 @@ export default function Sidebar({
   return (
     <div className="min-h-full w-1/5 border-r border-gray-700 bg-[#1c1c1c] shadow-lg">
       <Topbar user={user} />
-      <SearchBar filterText={filterText} setFilterText={setFilterText} />
+      <div className="my-3 flex">
+        <SearchBar filterText={filterText} setFilterText={setFilterText} />
+        <button className="mx-2 bg-[#1c1c1c] text-2xl transition-all hover:text-green-200">
+          +
+        </button>
+      </div>
       <ul>
         {filteredList?.length! > 0 ? (
           filteredList?.map((user: any, index: number) => {
