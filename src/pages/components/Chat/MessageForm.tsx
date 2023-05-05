@@ -9,7 +9,6 @@ export default function MessageForm({ user, id }: any) {
     message: string;
   };
   const supabase = useSupabaseClient();
-
   const schema: ZodType<formData> = z.object({
     message: z.string().min(1).max(500),
   });
@@ -37,11 +36,7 @@ export default function MessageForm({ user, id }: any) {
         className="h-12 w-full rounded-lg bg-[#1c1c1c] px-4"
         autoComplete="off"
       />
-      <button
-        type="submit"
-        className="ml-4 text-center"
-        disabled={getValues("message").length < 1}
-      >
+      <button type="submit" className="ml-4 text-center">
         <IconBrandTelegram
           size={24}
           className="stroke-1 transition-all hover:stroke-2 hover:opacity-80"
