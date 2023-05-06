@@ -1,22 +1,12 @@
 import { useQuery } from "@tanstack/react-query"
 import BeatLoader from "react-spinners/BeatLoader"
 import { getActiveChats } from "~/pages/queries/allQueries"
-import { useSupabaseClient } from "@supabase/auth-helpers-react"
+import { User, useSupabaseClient } from "@supabase/auth-helpers-react"
 import { useEffect } from "react"
 import ChatCard from "./SpecificChat/ChatCard"
 
-export default function OpenedChats({ user, filterText }: { user: any; filterText: string }) {
+export default function OpenedChats({ user, filterText }: { user: User | null; filterText: string }) {
   const supabase = useSupabaseClient()
-
-  const {
-    data: chatInfos,
-    isLoading,
-    refetch,
-  } = useQuery({
-    queryKey: ["getChatInfos"],
-    queryFn: () => getActiveChats(user.id, supabase),
-    enabled: !!user?.id,
-  })
 
   useEffect(() => {
     const channel = supabase
@@ -27,7 +17,7 @@ export default function OpenedChats({ user, filterText }: { user: any; filterTex
           event: "INSERT",
           schema: "public",
           table: "chat_users",
-          filter: `user_id=eq.${user.id}`,
+          filter: `user_id=eq.${user?.id}`,
         },
         () => refetch()
       )
@@ -37,10 +27,18 @@ export default function OpenedChats({ user, filterText }: { user: any; filterTex
     }
   }, [])
 
-  const filteredChats = chatInfos?.filter((chat) =>
-    //   @ts-ignore
-    chat.user?.email.includes(filterText)
-  )
+  const {
+    data: chatInfos,
+    isLoading,
+    refetch,
+  } = useQuery({
+    queryKey: ["getChatInfos"],
+    queryFn: () => getActiveChats(user?.id, supabase),
+    enabled: !!user?.id,
+  })
+
+  //couldnt get user type to work properly
+  const filteredChats = chatInfos?.filter((chat: { chatId: number; user: any }) => chat.user?.email.includes(filterText))
 
   return (
     <>

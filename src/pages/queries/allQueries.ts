@@ -3,8 +3,10 @@ import { UUID } from "crypto"
 
 type client = SupabaseClient<any, "public", any>
 
-export const getActiveChats = async (userId: number, supabase: client) => {
+export const getActiveChats = async (userId: string | undefined, supabase: client) => {
   const { data: chatIds } = await supabase.from("chat_users").select("chat_id").eq("user_id", userId)
+
+  if (!chatIds?.length) return []
 
   const { data: userList } = await supabase
     .from("chat_users")
@@ -12,7 +14,6 @@ export const getActiveChats = async (userId: number, supabase: client) => {
     .neq("user_id", userId)
     .in(
       "chat_id",
-      // @ts-ignore
       chatIds?.map(({ chat_id }) => chat_id)
     )
 

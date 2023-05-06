@@ -3,8 +3,9 @@ import Topbar from "./Topbar/TopbarMain"
 import SearchBar from "./OpenedChats/SearchBar"
 import AddChatButton from "./OpenedChats/AddChatButton/AddChatButtonMain"
 import OpenedChats from "./OpenedChats/OpenedChatsMain"
+import { User } from "@supabase/auth-helpers-nextjs"
 
-export default function Sidebar({ user }: any) {
+export default function Sidebar({ user }: { user: User | null }) {
   const [filterText, setFilterText] = useState<string>("")
 
   return (

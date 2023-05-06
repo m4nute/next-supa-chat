@@ -1,7 +1,8 @@
+import { User } from "@supabase/auth-helpers-nextjs"
 import UserAvatar from "../../UserAvatar"
 import LogoutDialog from "./LogoutDialog"
 
-export default function Topbar({ user }: { user: any }) {
+export default function Topbar({ user }: { user: User | null }) {
   return (
     <div className=" flex h-16 justify-between bg-topbar px-2">
       <div className="flex">
