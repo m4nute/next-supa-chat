@@ -3,7 +3,7 @@ import BeatLoader from "react-spinners/BeatLoader"
 import { getActiveChats } from "~/pages/queries/allQueries"
 import { useSupabaseClient } from "@supabase/auth-helpers-react"
 import { useEffect } from "react"
-import ChatCard from "./ChatCard"
+import ChatCard from "./SpecificChat/ChatCard"
 
 export default function OpenedChats({ user, filterText }: { user: any; filterText: string }) {
   const supabase = useSupabaseClient()
@@ -43,6 +43,12 @@ export default function OpenedChats({ user, filterText }: { user: any; filterTex
   )
 
   return (
-    <>{filteredChats?.length ? filteredChats.map((chat: any, index: number) => <ChatCard chat={chat} index={index} />) : <h2 className="text-center">{isLoading ? <BeatLoader loading={true} size={10} color="#d2d2d2" /> : "No Chats Found :c"}</h2>}</>
+    <>
+      {filteredChats?.length ? (
+        filteredChats.map((chat: any, index: number) => <ChatCard chat={chat} index={index} key={index} />)
+      ) : (
+        <h2 className="text-center">{isLoading ? <BeatLoader loading={true} size={10} color="#d2d2d2" /> : "No Chats Found :c"}</h2>
+      )}
+    </>
   )
 }
