@@ -31,7 +31,7 @@ export default function AddChatForm({ setOpen, open }: { setOpen: (state: boolea
     if (existentChats.length) {
       const { data: chatAlreadyCreated } = await getChatWithMatchingUser(supabase, existentChats, matchingUser.id, user?.id)
 
-      if (!chatAlreadyCreated) {
+      if (chatAlreadyCreated) {
         setError("email", { message: "Chat Already Created" })
         return
       }
