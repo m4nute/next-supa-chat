@@ -1,7 +1,7 @@
 import { useState } from "react"
 import Topbar from "./Topbar/TopbarMain"
 import SearchBar from "./OpenedChats/SearchBar"
-import AddChatButton from "./OpenedChats/AddChatButton"
+import AddChatButton from "./OpenedChats/AddChatButton/AddChatButtonMain"
 import OpenedChats from "./OpenedChats/OpenedChatsMain"
 
 export default function Sidebar({ user }: any) {
