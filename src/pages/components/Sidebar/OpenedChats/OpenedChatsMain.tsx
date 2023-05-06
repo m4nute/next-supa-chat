@@ -41,12 +41,12 @@ export default function OpenedChats({ user, filterText }: { user: User | null; f
   const filteredChats = chatInfos?.filter((chat: { chatId: number; user: any }) => chat.user?.email.includes(filterText))
 
   return (
-    <>
+    <div className="ml-2 mr-3">
       {filteredChats?.length ? (
         filteredChats.map((chat: any, index: number) => <ChatCard chat={chat} index={index} key={index} />)
       ) : (
         <h2 className="text-center">{isLoading ? <BeatLoader loading={true} size={10} color="#d2d2d2" /> : "No Chats Found :c"}</h2>
       )}
-    </>
+    </div>
   )
 }

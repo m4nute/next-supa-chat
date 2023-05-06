@@ -1,9 +1,10 @@
-import { useSupabaseClient } from "@supabase/auth-helpers-react"
+import { User, useSupabaseClient } from "@supabase/auth-helpers-react"
 import { useQuery } from "@tanstack/react-query"
 import { useEffect } from "react"
 import useStore from "~/zustand/globalState"
+import MessageCard from "./MessageCard"
 
-export default function MessageList({ user }: any) {
+export default function MessageList({ user }: { user: User | null }) {
   const selectedChat = useStore((state) => state.selectedChat)
   const supabase = useSupabaseClient()
 
@@ -38,20 +39,7 @@ export default function MessageList({ user }: any) {
   return (
     <ul className="px-10 pt-2">
       {messages?.map((message: any, index: number) => {
-        return (
-          <li key={index} className={`mt-3 flex ${message.sender_id === user?.id && "justify-end"}`}>
-            <div className="bg-message flex rounded-xl py-1.5 pl-4 pr-2">
-              <p className="text-lg opacity-90">{message.content}</p>
-              <span className="ml-2 flex flex-col justify-end text-[0.8rem] opacity-80">
-                {new Date(message.created_at).toLocaleTimeString("default", {
-                  hour: "2-digit",
-                  minute: "2-digit",
-                  hourCycle: "h23",
-                })}
-              </span>
-            </div>
-          </li>
-        )
+        return <MessageCard user={user} message={message} key={index} />
       })}
     </ul>
   )

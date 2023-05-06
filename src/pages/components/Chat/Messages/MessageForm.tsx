@@ -26,7 +26,7 @@ export default function MessageForm({ user }: any) {
   }
 
   return (
-    <form onSubmit={handleSubmit(submitData)} className="fixed bottom-0 right-0 flex h-16 w-4/5 border-t border-gray-700 bg-topbar px-4 py-2">
+    <form onSubmit={handleSubmit(submitData)} className="fixed bottom-0 right-0 flex h-16 w-3/4 px-4 py-2">
       <input type="text" placeholder="Message" {...register("message")} className="h-12 w-full rounded-lg bg-input px-4" autoComplete="off" />
       <button type="submit" className="ml-4 text-center">
         <IconBrandTelegram size={24} className="stroke-1 transition-all hover:stroke-2 hover:opacity-80" />
