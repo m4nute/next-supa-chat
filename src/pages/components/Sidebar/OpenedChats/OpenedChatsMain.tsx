@@ -49,7 +49,7 @@ export default function OpenedChats({ user, filterText }: { user: any; filterTex
         filteredChats.map((chat: any, index: number) => (
           <button
             key={index}
-            className={`w-full border-y border-gray-600 px-3 py-2 text-sm ${selectedChat === chat.chatId && "bg-message"}`}
+            className={`w-full ${index === 0 ? "border-t" : "border-y"} border-gray-600 px-3 py-2 text-sm ${selectedChat === chat.chatId && "bg-message"}`}
             onClick={() => {
               setSelectedChat(chat.chatId)
               setSelectedUser(chat.user)
