@@ -1,20 +1,15 @@
 import * as Dialog from "@radix-ui/react-dialog"
-import { type ZodType, z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react"
+import { User, useSupabaseClient, useUser } from "@supabase/auth-helpers-react"
 import { useState } from "react"
+import { createChat, createChatDependencies, getChatWithMatchingUser, getUser, getUserChats } from "~/pages/queries/allQueries"
+import { addChatSchema } from "~/schemas/schemas"
 
 export default function AddChatButton() {
-  type formData = {
-    email: string
-  }
   const supabase = useSupabaseClient()
-  const user = useUser()
-
-  const schema: ZodType<formData> = z.object({
-    email: z.string().email(),
-  })
+  const user: User | null = useUser()
+  const [open, setOpen] = useState<boolean>(false)
 
   const {
     register,
@@ -22,43 +17,37 @@ export default function AddChatButton() {
     reset,
     setError,
     formState: { errors },
-  } = useForm<formData>({
-    resolver: zodResolver(schema),
-  })
+  } = useForm<addChatForm>({ resolver: zodResolver(addChatSchema) })
 
-  const [open, setOpen] = useState<boolean>(false)
-
-  const submitData = async ({ email }: formData) => {
+  const submitData = async ({ email }: addChatForm) => {
     if (email === user?.email) {
       setError("email", { message: "Own email is invalid" })
       return
     }
 
-    const { data: matchingUsers } = await supabase.from("profiles").select("id").eq("email", email)
-
-    if (matchingUsers?.length! == 0) {
+    const { data: matchingUser } = await getUser(supabase, email)
+    if (!matchingUser) {
       setError("email", { message: "Email not found" })
       return
     }
 
-    let { data: existentChats } = await supabase.from("chat_users").select("chat_id").eq("user_id", user?.id)
-    existentChats = existentChats?.map((obj) => obj.chat_id) || []
+    let { data } = await getUserChats(supabase, user?.id)
+    const existentChats: number[] | [] = data?.map((chat) => chat.chat_id) || []
 
-    const { data: chatAlreadyCreated } = await supabase.from("chat_users").select("user_id").eq("chat_id", existentChats).eq("user_id", matchingUsers?.[0]?.id).neq("user_id", user?.id)
+    if (existentChats.length) {
+      const { data: chatAlreadyCreated } = await getChatWithMatchingUser(supabase, existentChats, matchingUser.id, user?.id)
 
-    if (chatAlreadyCreated?.length! > 0) {
-      setError("email", { message: "Chat Already Created" })
-      return
+      if (!chatAlreadyCreated) {
+        setError("email", { message: "Chat Already Created" })
+        return
+      }
     }
 
     setOpen(false)
     reset()
 
-    const { data: chat } = await supabase.from("chats").insert({}).select()
-    await supabase.from("chat_users").insert([
-      { chat_id: chat?.[0]?.id, user_id: user?.id },
-      { chat_id: chat?.[0]?.id, user_id: matchingUsers?.[0]?.id },
-    ])
+    const { data: chat } = await createChat(supabase)
+    createChatDependencies(supabase, chat?.[0]?.id, user?.id, matchingUser.id)
   }
 
   return (
