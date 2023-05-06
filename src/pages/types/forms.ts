@@ -1,0 +1,3 @@
+type addChatForm = {
+  email: string
+}
