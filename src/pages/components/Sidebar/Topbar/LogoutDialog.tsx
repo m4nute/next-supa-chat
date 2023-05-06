@@ -2,10 +2,13 @@ import * as AlertDialog from "@radix-ui/react-alert-dialog"
 import { useSupabaseClient } from "@supabase/auth-helpers-react"
 import { IconLogout } from "@tabler/icons-react"
 import { useRouter } from "next/router"
+import useStore from "../../../../zustand/globalState"
 
 export default function LogoutDialog() {
   const router = useRouter()
   const supabase = useSupabaseClient()
+  const [reset] = useStore((state) => [state.reset])
+
   return (
     <AlertDialog.Root>
       <AlertDialog.Trigger asChild>
@@ -26,6 +29,7 @@ export default function LogoutDialog() {
               <button
                 onClick={async () => {
                   await supabase.auth.signOut()
+                  reset()
                   router.push("/auth")
                 }}
                 className="inline-flex h-[35px] items-center justify-center rounded-[4px] bg-dialogButton px-[15px] text-red-400 transition-all hover:bg-dialogInput">
