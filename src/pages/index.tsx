@@ -1,9 +1,9 @@
 import Chat from "./components/Chat/ChatMain"
 import Sidebar from "./components/Sidebar/SidebarMain"
-import { GetServerSidePropsContext, NextPage } from "next"
-import { createServerSupabaseClient } from "@supabase/auth-helpers-nextjs"
+import { GetServerSidePropsContext } from "next"
+import { User, createServerSupabaseClient } from "@supabase/auth-helpers-nextjs"
 
-const Home: NextPage = ({ user }: any) => {
+const Home = ({ user }: { user: User | null }) => {
   return (
     <div className="flex h-full">
       <Sidebar user={user} />
@@ -17,15 +17,15 @@ export default Home
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   const supabase = createServerSupabaseClient(ctx)
   const {
-    data: { session },
-  } = await supabase.auth.getSession()
+    data: { user },
+  } = await supabase.auth.getUser()
 
-  if (!session)
+  if (!user)
     return {
       redirect: { destination: "/auth", permanent: false },
     }
 
   return {
-    props: { user: session.user },
+    props: { user: user },
   }
 }
