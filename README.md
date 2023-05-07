@@ -19,6 +19,11 @@ To install and run this project locally, follow these steps:
     
 ## Supabase Setup
 
+  ### Providers
+  
+  Make sure to add the corresponding providers and configure them, in my case only Google.
+  Modify URL Configuration on Auth tab and introduce your URLs. e.g. http://localhost:3000/auth on redirect Urls
+
   ### Function Handle new User
   begin
     insert into public.profiles (id, username, avatar_url, email)
