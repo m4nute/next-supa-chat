@@ -3,18 +3,19 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useSupabaseClient } from "@supabase/auth-helpers-react"
 import { IconBrandTelegram } from "@tabler/icons-react"
 import useStore from "~/zustand/globalState"
-import { addChatSchema } from "~/schemas/schemas"
+import { addMessageSchema } from "~/schemas/schemas"
+import { insertMessage } from "~/queries/allQueries"
 
 export default function MessageForm({ user }: any) {
   const selectedChat = useStore((state) => state.selectedChat)
   const supabase = useSupabaseClient()
 
   const { register, handleSubmit, reset } = useForm<messageForm>({
-    resolver: zodResolver(addChatSchema),
+    resolver: zodResolver(addMessageSchema),
   })
 
   const submitData = async ({ message }: messageForm) => {
-    await supabase.from("messages").insert({ sender_id: user?.id, chat_id: selectedChat, content: message })
+    await insertMessage(supabase, user?.id, selectedChat, message)
     reset()
   }
 

@@ -8,6 +8,10 @@ export const getMessages = async (supabase: client, chatId: number | null) => {
   return data
 }
 
+export const insertMessage = async (supabase: client, userId: string | null, chatId: number | null, message: string) => {
+  await supabase.from("messages").insert({ sender_id: userId, chat_id: chatId, content: message })
+}
+
 export const getActiveChats = async (userId: string | undefined, supabase: client) => {
   const { data: chatIds } = await supabase.from("chat_users").select("chat_id").eq("user_id", userId).order("updated_at", { ascending: false })
 
