@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query"
 import { useEffect, useRef } from "react"
 import useStore from "~/zustand/globalState"
 import MessageCard from "./MessageCard"
-import { getMessages } from "~/queries/allQueries"
+import { getMessages } from "../../../../queries/allQueries"
 
 export default function MessageList({ user }: { user: User | null }) {
   const selectedChat = useStore((state) => state.selectedChat)

@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query"
-import { getActiveChats } from "~/queries/allQueries"
+import { getActiveChats } from "../../../../queries/allQueries"
 import { User, useSupabaseClient } from "@supabase/auth-helpers-react"
 import { useEffect } from "react"
 import ChatCard from "./SpecificChat/ChatCard"
