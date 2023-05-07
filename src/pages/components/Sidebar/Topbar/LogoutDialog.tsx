@@ -12,7 +12,7 @@ export default function LogoutDialog() {
   return (
     <AlertDialog.Root>
       <AlertDialog.Trigger asChild>
-        <button className="text-right">
+        <button className="text-right w-6">
           <IconLogout size={24} className="opacity-80 transition-colors hover:text-red-500" />
         </button>
       </AlertDialog.Trigger>

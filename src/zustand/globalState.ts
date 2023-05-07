@@ -6,7 +6,7 @@ type Store = {
 }
 
 type Setters = {
-  setSelectedChat: (chatId: number) => void
+  setSelectedChat: (chatId: number | null) => void
   setSelectedUser: (user: { email: string; avatar_url: string | null }) => void
   reset: () => void
 }

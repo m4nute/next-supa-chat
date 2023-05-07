@@ -4,7 +4,7 @@ import { UUID } from "crypto"
 type client = SupabaseClient<any, "public", any>
 
 export const getMessages = async (supabase: client, chatId: number | null) => {
-  const { data } = await supabase.from("messages").select().eq("chat_id", chatId)
+  const { data } = await supabase.from("messages").select().eq("chat_id", chatId).order("created_at", { ascending: true })
   return data
 }
 

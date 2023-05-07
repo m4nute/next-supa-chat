@@ -1,4 +1,5 @@
 import { type Config } from "tailwindcss"
+import defaultTheme from "tailwindcss/defaultTheme"
 
 export default {
   content: ["./src/**/*.{js,ts,jsx,tsx}"],
@@ -13,6 +14,10 @@ export default {
         searchBar: "#333333",
         rootBg: "#363742",
       },
+    },
+    screens: {
+      xs: "450px",
+      ...defaultTheme.screens,
     },
   },
   plugins: [],

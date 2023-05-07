@@ -8,7 +8,7 @@ export default function Home() {
   const user = useUser()
 
   return !user ? (
-    <div className="xl-1/3 mx-auto w-5/6 pt-12 sm:w-4/5 md:w-3/5 lg:w-1/2">
+    <div className="mx-auto w-5/6 pt-12 sm:w-4/5 md:w-3/5 lg:w-1/2 xl:w-1/3">
       <Auth supabaseClient={supabase} appearance={{ theme: ThemeSupa }} theme="dark" providers={["google"]} redirectTo="http://localhost:3000/auth" />
     </div>
   ) : (

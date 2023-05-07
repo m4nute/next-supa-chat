@@ -42,7 +42,7 @@ export default function MessageList({ user }: { user: User | null }) {
 
   const myElementRef = useRef(null)
   return (
-    <div className={`px-10 pt-2 h-[calc(100vh-9rem)] overflow-y-scroll flex-col-reverse flex`} ref={myElementRef}>
+    <div className={`px-5 sm:px-2 md:px-4 lg:px-10 pt-2 h-[calc(100vh-9rem)] overflow-y-scroll flex-col-reverse flex`} ref={myElementRef}>
       <ul>
         {messages?.map((message: any, index: number) => {
           return <MessageCard user={user} message={message} key={index} />
