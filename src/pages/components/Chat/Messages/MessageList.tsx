@@ -1,23 +1,17 @@
 import { User, useSupabaseClient } from "@supabase/auth-helpers-react"
 import { useQuery } from "@tanstack/react-query"
-import { useEffect } from "react"
+import { useEffect, useRef } from "react"
 import useStore from "~/zustand/globalState"
 import MessageCard from "./MessageCard"
-import { useAutoAnimate } from "@formkit/auto-animate/react"
-import { getChatMessages } from "~/pages/queries/allQueries"
+import { getMessages } from "~/pages/queries/allQueries"
 
 export default function MessageList({ user }: { user: User | null }) {
   const selectedChat = useStore((state) => state.selectedChat)
   const supabase = useSupabaseClient()
 
-  async function getMessages() {
-    const { data } = await getChatMessages(supabase, selectedChat)
-    return data
-  }
-
   const { data: messages, refetch } = useQuery({
     queryKey: ["getChatMessages", selectedChat],
-    queryFn: getMessages,
+    queryFn: () => getMessages(supabase, selectedChat),
   })
 
   useEffect(() => {
@@ -31,7 +25,14 @@ export default function MessageList({ user }: { user: User | null }) {
           table: "chats",
           filter: `id=eq.${selectedChat}`,
         },
-        () => refetch()
+        async () => {
+          await refetch()
+          //@ts-ignore
+          myElementRef.current.scrollTo({
+            top: 0,
+            behavior: "smooth",
+          })
+        }
       )
       .subscribe()
     return () => {
@@ -39,11 +40,10 @@ export default function MessageList({ user }: { user: User | null }) {
     }
   }, [selectedChat])
 
-  const [animationParent] = useAutoAnimate({ duration: 300 })
-
+  const myElementRef = useRef(null)
   return (
-    <div className="px-10 pt-2 h-[calc(100vh-9rem)] overflow-y-scroll flex-col-reverse flex">
-      <ul ref={animationParent}>
+    <div className={`px-10 pt-2 h-[calc(100vh-9rem)] overflow-y-scroll flex-col-reverse flex`} ref={myElementRef}>
+      <ul>
         {messages?.map((message: any, index: number) => {
           return <MessageCard user={user} message={message} key={index} />
         })}
