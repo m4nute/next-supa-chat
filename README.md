@@ -1,9 +1,9 @@
-##Realtime Chat App
+## Realtime Chat App
 
 This project is a realtime chat app, similar to Telegram, built with Next.js 12, Supabase, Zustand, and React Query.
 Installation
 
-##Installation
+## Installation
 
 To install and run this project locally, follow these steps:
 
@@ -18,7 +18,7 @@ To install and run this project locally, follow these steps:
     5.Replace your_supabase_url and your_supabase_anon_key with your Supabase project URL and anonymous key respectively. You can obtain these from the "Settings" page of your Supabase project dashboard.
     Start the development server using pnpm dev. The app should now be running on http://localhost:3000.
 
-##Technologies
+## Technologies
 
 This app uses the following technologies:
 
@@ -28,7 +28,7 @@ This app uses the following technologies:
     -React Query
     -Tailwind CSS
 
-##Features
+## Features
 
 This app includes the following features:
 
@@ -36,6 +36,6 @@ This app includes the following features:
     -Multiple chat rooms
     -User authentication and authorization
 
-##Contributions
+## Contributions
 
 Contributions to this project are welcome! If you find a bug or have an idea for a new feature, please open an issue or submit a pull request.
