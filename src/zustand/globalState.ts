@@ -18,7 +18,7 @@ const initialState: Store = {
 
 const useStore = create<Store & Setters>()((set) => ({
   ...initialState,
-  setSelectedChat: (chatId: number) => set(() => ({ selectedChat: chatId })),
+  setSelectedChat: (chatId: number | null) => set(() => ({ selectedChat: chatId })),
   setSelectedUser: (user: { avatar_url: string | null; email: string }) => set(() => ({ selectedUser: user })),
   reset: () => set(() => initialState),
 }))
