@@ -19,7 +19,6 @@ To install and run this project locally, follow these steps:
     
 ## Supabase Setup
 
-   
     ### Function Handle new User
     begin
         insert into public.profiles (id, username, avatar_url, email)
