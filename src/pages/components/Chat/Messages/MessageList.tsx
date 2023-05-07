@@ -39,13 +39,15 @@ export default function MessageList({ user }: { user: User | null }) {
     }
   }, [selectedChat])
 
-  const [animationParent] = useAutoAnimate()
+  const [animationParent] = useAutoAnimate({ duration: 300 })
 
   return (
-    <ul className="px-10 pt-2 h-[calc(100vh-9rem)] overflow-y-scroll flex-col-reverse flex" ref={animationParent}>
-      {messages?.map((message: any, index: number) => {
-        return <MessageCard user={user} message={message} key={index} />
-      })}
-    </ul>
+    <div className="px-10 pt-2 h-[calc(100vh-9rem)] overflow-y-scroll flex-col-reverse flex">
+      <ul ref={animationParent}>
+        {messages?.map((message: any, index: number) => {
+          return <MessageCard user={user} message={message} key={index} />
+        })}
+      </ul>
+    </div>
   )
 }

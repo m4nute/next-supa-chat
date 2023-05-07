@@ -9,11 +9,11 @@ export default function SuccessAuth() {
   return (
     <div className="pt-10 text-center">
       <h1 className="mb-4">Logged In Successfully!</h1>
-      <Link href="/" className="rounded-xl bg-message px-4 py-3 transition-all hover:bg-dialogInput">
+      <Link href="/" className="rounded-xl bg-input px-4 py-3 transition-all hover:bg-dialogInput">
         Start Chatting
       </Link>
       <button
-        className="ml-6 rounded-xl bg-message px-4 py-3 transition-all hover:bg-dialogInput"
+        className="ml-6 rounded-xl bg-input px-4 py-3 transition-all hover:bg-dialogInput"
         onClick={() => {
           supabase.auth.signOut()
           reset()
