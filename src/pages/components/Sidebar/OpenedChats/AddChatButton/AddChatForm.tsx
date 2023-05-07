@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { addChatSchema } from "~/schemas/schemas"
-import { createChat, createChatDependencies, getChatWithMatchingUser, getUser, getUserChats } from "~/pages/queries/allQueries"
+import { createChat, createChatDependencies, getChatWithMatchingUser, getUser, getUserChats } from "~/queries/allQueries"
 import { User, useSupabaseClient, useUser } from "@supabase/auth-helpers-react"
 import { useEffect } from "react"
 
