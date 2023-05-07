@@ -3,6 +3,10 @@ import { UUID } from "crypto"
 
 type client = SupabaseClient<any, "public", any>
 
+export const getChatMessages = async (supabase: client, chatId: number | null) => {
+  return await supabase.from("messages").select().eq("chat_id", chatId)
+}
+
 export const getActiveChats = async (userId: string | undefined, supabase: client) => {
   const { data: chatIds } = await supabase.from("chat_users").select("chat_id").eq("user_id", userId)
 

@@ -3,15 +3,18 @@ import { useQuery } from "@tanstack/react-query"
 import { useEffect } from "react"
 import useStore from "~/zustand/globalState"
 import MessageCard from "./MessageCard"
+import { useAutoAnimate } from "@formkit/auto-animate/react"
+import { getChatMessages } from "~/pages/queries/allQueries"
 
 export default function MessageList({ user }: { user: User | null }) {
   const selectedChat = useStore((state) => state.selectedChat)
   const supabase = useSupabaseClient()
 
   async function getMessages() {
-    const { data } = await supabase.from("messages").select().eq("chat_id", selectedChat)
+    const { data } = await getChatMessages(supabase, selectedChat)
     return data
   }
+
   const { data: messages, refetch } = useQuery({
     queryKey: ["getChatMessages", selectedChat],
     queryFn: getMessages,
@@ -36,8 +39,10 @@ export default function MessageList({ user }: { user: User | null }) {
     }
   }, [selectedChat])
 
+  const [animationParent] = useAutoAnimate()
+
   return (
-    <ul className="px-10 pt-2">
+    <ul className="px-10 pt-2 h-[calc(100vh-9rem)] overflow-y-scroll flex-col-reverse flex" ref={animationParent}>
       {messages?.map((message: any, index: number) => {
         return <MessageCard user={user} message={message} key={index} />
       })}
