@@ -1,29 +1,32 @@
-import { type ZodType, z } from "zod"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useSupabaseClient } from "@supabase/auth-helpers-react"
 import { IconBrandTelegram } from "@tabler/icons-react"
 import useStore from "~/zustand/globalState"
+import { useEffect } from "react"
+import { updateLastViewed } from "~/queries/allQueries"
+import { addChatSchema } from "~/schemas/schemas"
 
 export default function MessageForm({ user }: any) {
   const selectedChat = useStore((state) => state.selectedChat)
-
-  type formData = {
-    message: string
-  }
   const supabase = useSupabaseClient()
-  const schema: ZodType<formData> = z.object({
-    message: z.string().min(1).max(500),
+
+  const { register, handleSubmit, reset } = useForm<messageForm>({
+    resolver: zodResolver(addChatSchema),
   })
 
-  const { register, handleSubmit, reset } = useForm<formData>({
-    resolver: zodResolver(schema),
-  })
-
-  const submitData = async ({ message }: formData) => {
+  const submitData = async ({ message }: messageForm) => {
     await supabase.from("messages").insert({ sender_id: user?.id, chat_id: selectedChat, content: message })
     reset()
   }
+
+  useEffect(() => {
+    console.log("cargo")
+    updateLastViewed(supabase, selectedChat, user?.id, true)
+    return () => {
+      updateLastViewed(supabase, selectedChat, user?.id)
+    }
+  }, [])
 
   return (
     <form onSubmit={handleSubmit(submitData)} className=" flex h-20 w-full px-4 py-4">

@@ -1,12 +1,11 @@
 import ChatTopbar from "./ChatTopbar"
 import MessageList from "./Messages/MessageList"
 import MessageForm from "./Messages/MessageForm"
-import { useUser } from "@supabase/auth-helpers-react"
+import { User, useSupabaseClient } from "@supabase/auth-helpers-react"
 import useStore from "~/zustand/globalState"
 
-export default function Chat() {
-  const user = useUser()
-
+export default function Chat({ user }: { user: User | null }) {
+  const supabase = useSupabaseClient()
   const [selectedChat] = useStore((state) => [state.selectedChat])
 
   return (

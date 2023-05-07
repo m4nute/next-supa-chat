@@ -7,7 +7,7 @@ const Home = ({ user }: { user: User | null }) => {
   return (
     <div className="flex h-full">
       <Sidebar user={user} />
-      <Chat />
+      <Chat user={user} />
     </div>
   )
 }
