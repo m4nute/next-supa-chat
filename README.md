@@ -1,28 +1,41 @@
-# Create T3 App
+##Realtime Chat App
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+This project is a realtime chat app, similar to Telegram, built with Next.js 12, Supabase, Zustand, and React Query.
+Installation
 
-## What's next? How do I make an app with this?
+##Installation
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+To install and run this project locally, follow these steps:
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+    1.Clone the repository.
+    2.Navigate to the project directory using cd realtime-chat-app.
+    3.Install the dependencies using PNPM by running pnpm install.
+    4.Create a .env.local file in the root directory of the project, and add the following lines to it:
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+    NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+    NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
 
-## Learn More
+    5.Replace your_supabase_url and your_supabase_anon_key with your Supabase project URL and anonymous key respectively. You can obtain these from the "Settings" page of your Supabase project dashboard.
+    Start the development server using pnpm dev. The app should now be running on http://localhost:3000.
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+##Technologies
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+This app uses the following technologies:
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+    -Next.js 12
+    -Supabase
+    -Zustand
+    -React Query
+    -Tailwind CSS
 
-## How do I deploy this?
+##Features
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+This app includes the following features:
+
+    -Realtime chat
+    -Multiple chat rooms
+    -User authentication and authorization
+
+##Contributions
+
+Contributions to this project are welcome! If you find a bug or have an idea for a new feature, please open an issue or submit a pull request.
