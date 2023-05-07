@@ -19,10 +19,10 @@ To install and run this project locally, follow these steps:
     
 ## Supabase Setup
 
-    ### Function Handle new User
-    begin
-        insert into public.profiles (id, username, avatar_url, email)
-        values (new.id, new.raw_user_meta_data->>'full_name', new.raw_user_meta_data->>'avatar_url', new.email);
+  ### Function Handle new User
+  begin
+    insert into public.profiles (id, username, avatar_url, email)
+    values (new.id, new.raw_user_meta_data->>'full_name', new.raw_user_meta_data->>'avatar_url', new.email);
     return new;
     end;
    
