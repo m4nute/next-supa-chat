@@ -1,4 +1,4 @@
-## Realtime Chat App
+# Realtime Chat App
 
 This project is a realtime chat app, similar to Telegram, built with Next.js 12, Supabase, Zustand, and React Query.
 
@@ -15,6 +15,44 @@ To install and run this project locally, follow these steps:
 
     4.Replace your_supabase_url and your_supabase_anon_key with your Supabase project URL and anonymous key respectively. You can obtain these from the "Settings" page of your Supabase project dashboard.
     Start the development server using pnpm dev. The app should now be running on http://localhost:3000.
+    
+    
+## Supabase Setup
+
+  ### Providers
+  
+  Make sure to add the corresponding providers and configure them, in my case only Google.
+  Modify URL Configuration on Auth tab and introduce your URLs. e.g. http://localhost:3000/auth on redirect Urls
+
+  ### Function Handle new User
+  begin
+    insert into public.profiles (id, username, avatar_url, email)
+    values (new.id, new.raw_user_meta_data->>'full_name', new.raw_user_meta_data->>'avatar_url', new.email);
+    return new;
+    end;
+   
+   ### Function Update Total Messages
+   BEGIN
+  UPDATE public.chats
+  SET total_msg = total_msg + 1, updated_at = NOW()
+  WHERE id = NEW.chat_id;
+
+  UPDATE public.chat_users
+  SET updated_at = NOW()
+  WHERE chat_id = NEW.chat_id;
+
+  RETURN NEW;
+END;
+
+### Trigger 1 
+schema auth table users after insert => Handle new User
+
+### Trigger 2
+schema public table chats after insert => Update Total Messages
+
+### Schema
+![alt text](https://github.com/m4nute/next-supa-chat/blob/main/schema.png?raw=true)
+
 
 ## Technologies
 
