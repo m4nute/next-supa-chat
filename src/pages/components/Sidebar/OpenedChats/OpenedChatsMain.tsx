@@ -1,9 +1,10 @@
 import { useQuery } from "@tanstack/react-query"
-import BeatLoader from "react-spinners/BeatLoader"
 import { getActiveChats } from "~/pages/queries/allQueries"
 import { User, useSupabaseClient } from "@supabase/auth-helpers-react"
 import { useEffect } from "react"
 import ChatCard from "./SpecificChat/ChatCard"
+import UnresolvedStates from "./UnresolvedStates"
+import { useAutoAnimate } from "@formkit/auto-animate/react"
 
 export default function OpenedChats({ user, filterText }: { user: User | null; filterText: string }) {
   const supabase = useSupabaseClient()
@@ -11,6 +12,16 @@ export default function OpenedChats({ user, filterText }: { user: User | null; f
   useEffect(() => {
     const channel = supabase
       .channel("realtime chats")
+      .on(
+        "postgres_changes",
+        {
+          event: "UPDATE",
+          schema: "public",
+          table: "chat_users",
+          filter: `user_id=eq.${user?.id}`,
+        },
+        () => refetch()
+      )
       .on(
         "postgres_changes",
         {
@@ -40,12 +51,18 @@ export default function OpenedChats({ user, filterText }: { user: User | null; f
   //couldnt get user type to work properly
   const filteredChats = chatInfos?.filter((chat: { chatId: number; user: any }) => chat.user?.email.includes(filterText))
 
+  const [animationParent] = useAutoAnimate()
+
   return (
-    <div className="ml-2 mr-3">
+    <div className="pl-2 pr-2 overflow-y-scroll h-[calc(100vh-134.4px)]">
       {filteredChats?.length ? (
-        filteredChats.map((chat: any, index: number) => <ChatCard chat={chat} index={index} key={index} />)
+        <ul ref={animationParent}>
+          {filteredChats.map((chat: any, index: number) => (
+            <ChatCard chat={chat} index={index} key={index} />
+          ))}
+        </ul>
       ) : (
-        <h2 className="text-center">{isLoading ? <BeatLoader loading={true} size={10} color="#d2d2d2" /> : "No Chats Found :c"}</h2>
+        <UnresolvedStates isLoading={isLoading} />
       )}
     </div>
   )
