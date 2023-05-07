@@ -21,6 +21,7 @@ export const getActiveChats = async (userId: string | undefined, supabase: clien
       "chat_id",
       chatIds?.map(({ chat_id }) => chat_id)
     )
+    .order("updated_at", { ascending: false })
 
   return chatIds?.map((chat, index) => ({
     chatId: chat.chat_id,

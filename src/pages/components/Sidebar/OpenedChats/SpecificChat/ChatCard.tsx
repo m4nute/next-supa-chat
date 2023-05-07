@@ -13,7 +13,9 @@ export default function ChatCard({ index, chat }: { index: number; chat: any }) 
         setSelectedUser(chat.user)
       }}>
       <UserAvatar avatarUrl={chat.user.avatar_url} email={chat.user.email} />
-      <h1 className="flex flex-col justify-center ml-2">{chat.user.email.split("@")[0]}</h1>
+      <h1 className="flex flex-col justify-center ml-2">
+        {chat.user.email.split("@")[0]} {chat.chatId}
+      </h1>
     </li>
   )
 }
