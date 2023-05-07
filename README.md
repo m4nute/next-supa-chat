@@ -1,7 +1,6 @@
 ## Realtime Chat App
 
 This project is a realtime chat app, similar to Telegram, built with Next.js 12, Supabase, Zustand, and React Query.
-Installation
 
 ## Installation
 
