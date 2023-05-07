@@ -21,14 +21,14 @@ To install and run this project locally, follow these steps:
 
     Add this functions and triggers as well.
     
-    # Handle new User
+    Function Handle new User
     begin
         insert into public.profiles (id, username, avatar_url, email)
         values (new.id, new.raw_user_meta_data->>'full_name', new.raw_user_meta_data->>'avatar_url', new.email);
     return new;
     end;
    
-   # Update Total Messages
+   Function Update Total Messages
    BEGIN
   UPDATE public.chats
   SET total_msg = total_msg + 1, updated_at = NOW()
@@ -41,13 +41,13 @@ To install and run this project locally, follow these steps:
   RETURN NEW;
 END;
 
-# Trigger 1 
+Trigger 1 
 schema auth table users after insert => Handle new User
 
-# Trigger 2
+Trigger 2
 schema public table chats after insert => Update Total Messages
 
-# Schema
+Schema
 ![alt text](https://github.com/m4nute/next-supa-chat/blob/mIN/schema.png?raw=true)
 
 
