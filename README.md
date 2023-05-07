@@ -8,14 +8,13 @@ Installation
 To install and run this project locally, follow these steps:
 
     1.Clone the repository.
-    2.Navigate to the project directory using cd realtime-chat-app.
-    3.Install the dependencies using PNPM by running pnpm install.
-    4.Create a .env.local file in the root directory of the project, and add the following lines to it:
+    2.Install the dependencies using PNPM by running pnpm install.
+    3.Create a .env.local file in the root directory of the project, and add the following lines to it:
 
     NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
     NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
 
-    5.Replace your_supabase_url and your_supabase_anon_key with your Supabase project URL and anonymous key respectively. You can obtain these from the "Settings" page of your Supabase project dashboard.
+    4.Replace your_supabase_url and your_supabase_anon_key with your Supabase project URL and anonymous key respectively. You can obtain these from the "Settings" page of your Supabase project dashboard.
     Start the development server using pnpm dev. The app should now be running on http://localhost:3000.
 
 ## Technologies
