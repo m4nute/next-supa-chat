@@ -3,8 +3,6 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useSupabaseClient } from "@supabase/auth-helpers-react"
 import { IconBrandTelegram } from "@tabler/icons-react"
 import useStore from "~/zustand/globalState"
-import { useEffect } from "react"
-import { updateLastViewed } from "~/queries/allQueries"
 import { addChatSchema } from "~/schemas/schemas"
 
 export default function MessageForm({ user }: any) {
@@ -19,14 +17,6 @@ export default function MessageForm({ user }: any) {
     await supabase.from("messages").insert({ sender_id: user?.id, chat_id: selectedChat, content: message })
     reset()
   }
-
-  useEffect(() => {
-    console.log("cargo")
-    updateLastViewed(supabase, selectedChat, user?.id, true)
-    return () => {
-      updateLastViewed(supabase, selectedChat, user?.id)
-    }
-  }, [])
 
   return (
     <form onSubmit={handleSubmit(submitData)} className=" flex h-20 w-full px-4 py-4">

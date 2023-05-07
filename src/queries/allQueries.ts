@@ -8,14 +8,6 @@ export const getMessages = async (supabase: client, chatId: number | null) => {
   return data
 }
 
-export const updateLastViewed = async (supabase: client, chatId: number | null, userId: string | undefined, active: boolean = false) => {
-  await supabase
-    .from("chat_users")
-    .update({ last_viewed: active ? null : new Date() })
-    .eq("user_id", userId)
-    .eq("chat_id", chatId)
-}
-
 export const getActiveChats = async (userId: string | undefined, supabase: client) => {
   const { data: chatIds } = await supabase.from("chat_users").select("chat_id").eq("user_id", userId).order("updated_at", { ascending: false })
 
