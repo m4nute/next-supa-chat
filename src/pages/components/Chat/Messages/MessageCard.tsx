@@ -5,7 +5,7 @@ export default function MessageCard({ message, user }: { user: User | null; mess
 
   return (
     <li className={`mt-3 flex ${ownMessage && "justify-end"}`}>
-      <div className={`${ownMessage ? "bg-message" : "bg-input"} flex rounded-xl py-1.5 pl-4 pr-2`}>
+      <div className={`${ownMessage ? "bg-message" : "bg-input"} flex rounded-2xl py-1.5 pl-4 pr-2`}>
         <p className="text-lg opacity-90">{message.content}</p>
         <span className="ml-2 flex flex-col justify-end text-[0.8rem] opacity-80">
           {new Date(message.created_at).toLocaleTimeString("default", {
