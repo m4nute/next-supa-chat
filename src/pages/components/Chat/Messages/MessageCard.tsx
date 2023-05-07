@@ -1,6 +1,6 @@
 import { User } from "@supabase/auth-helpers-nextjs"
 
-export default function MessageCard({ message, user }: { user: User | null; message: { sender_id: string; content: string; created_at: Date } }) {
+export default function MessageCard({ message, user }: { user: User | null; message: { id: number; chat_id: number; sender_id: string; content: string; created_at: Date } }) {
   const ownMessage = message.sender_id === user?.id
   const formattedTime = new Date(message.created_at).toLocaleTimeString("default", {
     hour: "2-digit",
