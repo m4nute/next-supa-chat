@@ -5,17 +5,29 @@ import { IconBrandTelegram } from "@tabler/icons-react"
 import useStore from "~/zustand/globalState"
 import { addMessageSchema } from "~/schemas/schemas"
 import { insertMessage } from "~/queries/allQueries"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
 
 export default function MessageForm({ user }: any) {
+  const queryClient = useQueryClient()
   const selectedChat = useStore((state) => state.selectedChat)
   const supabase = useSupabaseClient()
 
   const { register, handleSubmit, reset } = useForm<messageForm>({
-    resolver: zodResolver(addMessageSchema),
+    resolver: zodResolver(addMessageSchema)
+  })
+
+  const mutation = useMutation({
+    mutationFn: async (message: string) => {
+      const { data, error } = await insertMessage(supabase, user?.id, selectedChat, message)
+      return data
+    },
+    onSuccess: async (data) => {
+      queryClient.setQueryData(["getChatMessages", selectedChat], (old: any) => [...(old ?? []), data])
+    }
   })
 
   const submitData = async ({ message }: messageForm) => {
-    await insertMessage(supabase, user?.id, selectedChat, message)
+    mutation.mutate(message)
     reset()
   }
 

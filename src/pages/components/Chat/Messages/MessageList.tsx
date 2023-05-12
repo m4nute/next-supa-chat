@@ -1,5 +1,5 @@
 import { User, useSupabaseClient } from "@supabase/auth-helpers-react"
-import { useQuery } from "@tanstack/react-query"
+import { useQuery, useQueryClient } from "@tanstack/react-query"
 import { useEffect, useRef } from "react"
 import useStore from "~/zustand/globalState"
 import MessageCard from "./MessageCard"
@@ -9,9 +9,10 @@ export default function MessageList({ user }: { user: User | null }) {
   const selectedChat = useStore((state) => state.selectedChat)
   const supabase = useSupabaseClient()
 
+  const queryClient = useQueryClient()
   const { data: messages, refetch } = useQuery({
     queryKey: ["getChatMessages", selectedChat],
-    queryFn: () => getMessages(supabase, selectedChat),
+    queryFn: () => getMessages(supabase, selectedChat)
   })
 
   useEffect(() => {
@@ -20,17 +21,17 @@ export default function MessageList({ user }: { user: User | null }) {
       .on(
         "postgres_changes",
         {
-          event: "UPDATE",
+          event: "INSERT",
           schema: "public",
-          table: "chats",
-          filter: `id=eq.${selectedChat}`,
+          table: "messages",
+          filter: `chat_id=eq.${selectedChat} AND sernder_id!=${user?.id}`
         },
         async () => {
           await refetch()
           //@ts-ignore
           myElementRef.current.scrollTo({
             top: 0,
-            behavior: "smooth",
+            behavior: "smooth"
           })
         }
       )

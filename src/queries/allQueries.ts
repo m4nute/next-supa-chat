@@ -9,7 +9,8 @@ export const getMessages = async (supabase: client, chatId: number | null) => {
 }
 
 export const insertMessage = async (supabase: client, userId: string | null, chatId: number | null, message: string) => {
-  await supabase.from("messages").insert({ sender_id: userId, chat_id: chatId, content: message })
+  const { data, error } = await supabase.from("messages").insert({ sender_id: userId, chat_id: chatId, content: message }).select()
+  return { data: data?.[0], error }
 }
 
 export const getActiveChats = async (userId: string | undefined, supabase: client) => {
@@ -29,7 +30,7 @@ export const getActiveChats = async (userId: string | undefined, supabase: clien
 
   return chatIds?.map((chat, index) => ({
     chatId: chat.chat_id,
-    user: userList?.[index]?.profiles,
+    user: userList?.[index]?.profiles
   }))
 }
 
@@ -40,7 +41,7 @@ export const createChat = async (supabase: client) => {
 export const createChatDependencies = async (supabase: client, chatId: number, userId: string | undefined, receiverId: UUID) => {
   await supabase.from("chat_users").insert([
     { chat_id: chatId, user_id: userId },
-    { chat_id: chatId, user_id: receiverId },
+    { chat_id: chatId, user_id: receiverId }
   ])
 }
 
