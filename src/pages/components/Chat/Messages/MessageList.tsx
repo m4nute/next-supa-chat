@@ -23,7 +23,7 @@ export default function MessageList({ user }: { user: User | null }) {
           event: "INSERT",
           schema: "public",
           table: "messages",
-          filter: `chat_id=eq.${selectedChat} AND sender_id!=${user?.id}`
+          filter: `chat_id=eq.${selectedChat}`
         },
         async () => {
           await refetch()
