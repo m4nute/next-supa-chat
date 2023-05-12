@@ -9,7 +9,6 @@ export default function MessageList({ user }: { user: User | null }) {
   const selectedChat = useStore((state) => state.selectedChat)
   const supabase = useSupabaseClient()
 
-  const queryClient = useQueryClient()
   const { data: messages, refetch } = useQuery({
     queryKey: ["getChatMessages", selectedChat],
     queryFn: () => getMessages(supabase, selectedChat)
@@ -24,7 +23,7 @@ export default function MessageList({ user }: { user: User | null }) {
           event: "INSERT",
           schema: "public",
           table: "messages",
-          filter: `chat_id=eq.${selectedChat} AND sernder_id!=${user?.id}`
+          filter: `chat_id=eq.${selectedChat} AND sender_id!=${user?.id}`
         },
         async () => {
           await refetch()
